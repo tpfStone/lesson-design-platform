@@ -1,0 +1,18 @@
+{
+  "subject": "化学",
+  "grade": "高二",
+  "topic": "官能团与有机物性质",
+  "durationMinutes": 45,
+  "courseInformation": "选择性必修模块",
+  "textbookVersion": "人教版",
+  "textbookContent": "",
+  "curriculumStandards": ["认识常见官能团及其性质"],
+  "learningObjectives": ["能依据结构识别常见官能团"],
+  "studentProfile": "学生已学习烃的基本结构",
+  "classSize": 42,
+  "availableResources": ["分子模型"],
+  "additionalRequirements": "包含证据分类活动",
+  "lessonStyle": "inquiry_through_cognitive_conflict",
+  "detailLevel": "showcase",
+  "retryOfJobId": null
+}

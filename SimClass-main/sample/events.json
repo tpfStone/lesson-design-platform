@@ -1,0 +1,211 @@
+[
+  {
+    "eventId": "47cfee11-cb4a-492f-a340-2f50b33da7b1",
+    "sequence": 1,
+    "sessionId": "6355d918-0a67-4b09-996b-d7935fa493d3",
+    "occurredAt": "2026-10-04T17:29:03.517Z",
+    "completedAt": "2026-10-04T17:29:03.518Z",
+    "wallClockDurationMs": 1,
+    "estimatedTeachingSeconds": null,
+    "estimated": false,
+    "trigger": {
+      "type": "INITIALIZATION",
+      "content": null
+    },
+    "managerDecision": {
+      "speaker": "teacher",
+      "function": "teach",
+      "reason": "开始讲授当前材料",
+      "endClass": false
+    },
+    "speaker": "teacher",
+    "roleLabel": "教师",
+    "function": "teach",
+    "content": "[MockLLM] 下面开始讲解这一部分，先明确概念，再逐条讲要点，最后用例子帮助理解。（模拟回复）",
+    "material": {
+      "materialId": "m-define",
+      "title": "一次函数定义",
+      "sourceSectionId": "sec-1"
+    },
+    "status": "COMPLETED",
+    "error": null
+  },
+  {
+    "eventId": "83663298-7d6e-42e5-a2e6-145853041372",
+    "sequence": 2,
+    "sessionId": "6355d918-0a67-4b09-996b-d7935fa493d3",
+    "occurredAt": "2026-10-04T17:29:03.528Z",
+    "completedAt": "2026-10-04T17:29:03.528Z",
+    "wallClockDurationMs": 0,
+    "estimatedTeachingSeconds": null,
+    "estimated": false,
+    "trigger": {
+      "type": "USER_INPUT",
+      "content": "老师，k 可以等于 0 吗？"
+    },
+    "managerDecision": {
+      "speaker": "assistant",
+      "function": "answer_question",
+      "reason": "用户提出问题，先由助教解答",
+      "endClass": false
+    },
+    "speaker": "assistant",
+    "roleLabel": "助教",
+    "function": "answer_question",
+    "content": "[MockLLM] 这个问题问得好，关键在于理解核心机制，我分两点来解释……（模拟回复）",
+    "material": {
+      "materialId": "m-define",
+      "title": "一次函数定义",
+      "sourceSectionId": "sec-1"
+    },
+    "status": "COMPLETED",
+    "error": null
+  },
+  {
+    "eventId": "cc4cfb15-ab10-451e-90fc-0ad64c3a32dd",
+    "sequence": 3,
+    "sessionId": "6355d918-0a67-4b09-996b-d7935fa493d3",
+    "occurredAt": "2026-10-04T17:29:03.539Z",
+    "completedAt": "2026-10-04T17:29:03.539Z",
+    "wallClockDurationMs": 0,
+    "estimatedTeachingSeconds": null,
+    "estimated": false,
+    "trigger": {
+      "type": "USER_INPUT",
+      "content": "继续"
+    },
+    "managerDecision": {
+      "speaker": "teacher",
+      "function": "next_material",
+      "reason": "当前材料讨论完毕，进入下一份材料",
+      "endClass": false
+    },
+    "speaker": "teacher",
+    "roleLabel": "教师",
+    "function": "next_material",
+    "content": "[MockLLM] 这部分先讲到这里，接下来进入下一份材料，它和刚才的内容密切相关。（模拟回复）",
+    "material": {
+      "materialId": "m-example",
+      "title": "例题辨析",
+      "sourceSectionId": "sec-2"
+    },
+    "status": "COMPLETED",
+    "error": null
+  },
+  {
+    "eventId": "cdbff7a5-f291-4c5b-b372-44ba85b1917a",
+    "sequence": 4,
+    "sessionId": "6355d918-0a67-4b09-996b-d7935fa493d3",
+    "occurredAt": "2026-10-04T17:29:03.560Z",
+    "completedAt": "2026-10-04T17:29:03.560Z",
+    "wallClockDurationMs": 0,
+    "estimatedTeachingSeconds": null,
+    "estimated": false,
+    "trigger": {
+      "type": "TIMEOUT",
+      "content": null
+    },
+    "managerDecision": {
+      "speaker": "teacher",
+      "function": "teach",
+      "reason": "开始讲授当前材料",
+      "endClass": false
+    },
+    "speaker": "teacher",
+    "roleLabel": "教师",
+    "function": "teach",
+    "content": "[MockLLM] 下面开始讲解这一部分，先明确概念，再逐条讲要点，最后用例子帮助理解。（模拟回复）",
+    "material": {
+      "materialId": "m-example",
+      "title": "例题辨析",
+      "sourceSectionId": "sec-2"
+    },
+    "status": "COMPLETED",
+    "error": null
+  },
+  {
+    "eventId": "1c462f11-0c7d-4391-9799-f7eab607a9f3",
+    "sequence": 5,
+    "sessionId": "6355d918-0a67-4b09-996b-d7935fa493d3",
+    "occurredAt": "2026-10-04T17:29:03.581Z",
+    "completedAt": "2026-10-04T17:29:03.581Z",
+    "wallClockDurationMs": 0,
+    "estimatedTeachingSeconds": null,
+    "estimated": false,
+    "trigger": {
+      "type": "TIMEOUT",
+      "content": null
+    },
+    "managerDecision": {
+      "speaker": "inquisitive_mind",
+      "function": "ask_question",
+      "reason": "材料刚讲完，同学提问促进理解",
+      "endClass": false
+    },
+    "speaker": "inquisitive_mind",
+    "roleLabel": "好奇提问者",
+    "function": "ask_question",
+    "content": "[MockLLM] 我有个问题：这个概念和我们刚才讲的内容有什么联系？（模拟回复）",
+    "material": {
+      "materialId": "m-example",
+      "title": "例题辨析",
+      "sourceSectionId": "sec-2"
+    },
+    "status": "COMPLETED",
+    "error": null
+  },
+  {
+    "eventId": "1fbf9c1c-8af5-43db-a9f9-c4c4ef37f94b",
+    "sequence": 6,
+    "sessionId": "6355d918-0a67-4b09-996b-d7935fa493d3",
+    "occurredAt": "2026-10-04T17:29:03.602Z",
+    "completedAt": "2026-10-04T17:29:03.602Z",
+    "wallClockDurationMs": 0,
+    "estimatedTeachingSeconds": null,
+    "estimated": false,
+    "trigger": {
+      "type": "TIMEOUT",
+      "content": null
+    },
+    "managerDecision": {
+      "speaker": "teacher",
+      "function": "next_material",
+      "reason": "当前材料讨论完毕，进入下一份材料",
+      "endClass": false
+    },
+    "speaker": "teacher",
+    "roleLabel": "教师",
+    "function": "next_material",
+    "content": "[MockLLM] 这部分先讲到这里，接下来进入下一份材料，它和刚才的内容密切相关。（模拟回复）",
+    "material": null,
+    "status": "COMPLETED",
+    "error": null
+  },
+  {
+    "eventId": "4423f38a-008e-4aa5-8de2-7f4f70a9924f",
+    "sequence": 7,
+    "sessionId": "6355d918-0a67-4b09-996b-d7935fa493d3",
+    "occurredAt": "2026-10-04T17:29:03.623Z",
+    "completedAt": "2026-10-04T17:29:03.624Z",
+    "wallClockDurationMs": 0,
+    "estimatedTeachingSeconds": null,
+    "estimated": false,
+    "trigger": {
+      "type": "TIMEOUT",
+      "content": null
+    },
+    "managerDecision": {
+      "speaker": "teacher",
+      "function": "summarize",
+      "reason": "课程全部讲完，做最终总结并下课",
+      "endClass": true
+    },
+    "speaker": "teacher",
+    "roleLabel": "教师",
+    "function": "summarize",
+    "content": "[MockLLM] 要点整理：1) 概念定义；2) 核心机制；3) 和前面内容的联系。（模拟回复）",
+    "material": null,
+    "status": "COMPLETED",
+    "error": null
+  }
+]

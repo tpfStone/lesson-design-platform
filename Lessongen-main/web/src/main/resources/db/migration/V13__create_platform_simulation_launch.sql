@@ -1,0 +1,20 @@
+CREATE TABLE platform_simulation_launch (
+    launch_id CHAR(36) PRIMARY KEY,
+    request_key CHAR(36) NOT NULL,
+    lesson_id CHAR(26) NOT NULL,
+    version_id CHAR(26) NOT NULL,
+    state VARCHAR(24) NOT NULL,
+    simulation_run_id CHAR(26) NULL,
+    f3_session_id CHAR(36) NULL,
+    f4_session_id CHAR(36) NULL,
+    active_roles_json VARCHAR(1000) NULL,
+    timeout_seconds INT NOT NULL,
+    message VARCHAR(1000) NOT NULL,
+    created_at DATETIME(6) NOT NULL,
+    updated_at DATETIME(6) NOT NULL,
+    CONSTRAINT uq_simulation_launch_request UNIQUE (request_key),
+    CONSTRAINT fk_simulation_launch_lesson FOREIGN KEY (lesson_id) REFERENCES platform_lesson(id),
+    CONSTRAINT fk_simulation_launch_version FOREIGN KEY (version_id) REFERENCES platform_lesson_version(id),
+    INDEX idx_simulation_launch_created (created_at),
+    INDEX idx_simulation_launch_f4_session (f4_session_id)
+);

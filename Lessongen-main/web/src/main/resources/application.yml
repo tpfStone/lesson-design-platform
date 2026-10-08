@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: Lesoongen
+  datasource:
+    url: ${DB_URL:jdbc:mysql://127.0.0.1:3306/lesoongen?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC}
+    username: ${DB_USERNAME:lesoongen}
+    password: ${DB_PASSWORD:}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate.jdbc.time_zone: UTC
+  flyway:
+    enabled: true
+    locations: classpath:db/migration,classpath:db/vendor/mysql
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 22MB
+
+server:
+  port: ${SERVER_PORT:8080}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  info:
+    env:
+      enabled: true
+
+info:
+  lessongen:
+    build-commit: ${LESSONGEN_BUILD_COMMIT:unknown}
+    build-dirty: ${LESSONGEN_BUILD_DIRTY:unknown}
+    runtime: ${LESSONGEN_RUNTIME_KIND:local}
+
+app:
+  engine-base-url: ${ENGINE_BASE_URL:http://127.0.0.1:8001}
+  engine-internal-token: ${ENGINE_INTERNAL_TOKEN:}
+  storage-root: ${LESSON_STORAGE_ROOT:./var/storage}
+  max-upload-bytes: 20971520
+  max-concurrent-jobs: 1
+  artifact-retention-days: 30
+  scheduling-enabled: true
+  frontend-origin: ${FRONTEND_ORIGIN:http://127.0.0.1:5173}

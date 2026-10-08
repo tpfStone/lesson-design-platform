@@ -1,0 +1,11 @@
+{
+  "jobId": "01J00000000000000000000000",
+  "status": "QUEUED",
+  "createdAt": "2026-09-11T07:00:00Z",
+  "links": {
+    "self": "/api/v1/lesson-jobs/01J00000000000000000000000",
+    "events": "/api/v1/lesson-jobs/01J00000000000000000000000/events",
+    "result": "/api/v1/lesson-jobs/01J00000000000000000000000/result",
+    "artifacts": "/api/v1/lesson-jobs/01J00000000000000000000000/artifacts"
+  }
+}

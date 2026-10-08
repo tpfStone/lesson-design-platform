@@ -1,0 +1,104 @@
+{
+  "schema_version": "paper4-experiment-v0.1",
+  "experiment_id": "paper4_deepseek_v4_flash_three_critic_p1_reviewed",
+  "method_id": "design_architect_writer_three_critic_validator_rewriter_p1_reviewed",
+  "execution_mode": "live",
+  "generation_review_policy": "at_least_one_independent_review",
+  "random_seed": 20260903,
+  "designer_profile_id": "design_architect_v0_1",
+  "writer_profile_id": "writer_v0_1",
+  "critic_profile_ids": [
+    "subject_critic_v0_1",
+    "pedagogy_critic_v0_1",
+    "alignment_critic_v0_1"
+  ],
+  "validator_profile_id": "validator_v0_1",
+  "judge_profile_id": "judge_v0_1",
+  "rewriter_profile_id": "rewriter_v0_1",
+  "role_model_configs": {
+    "design_architect_v0_1": {
+      "model_name": "deepseek-v4-flash",
+      "temperature": 0.8,
+      "max_tokens": 6144,
+      "thinking_mode": "disabled",
+      "timeout_seconds": 180,
+      "max_retries": 2
+    },
+    "writer_v0_1": {
+      "model_name": "deepseek-v4-flash",
+      "temperature": 0.6,
+      "max_tokens": 24576,
+      "thinking_mode": "disabled",
+      "timeout_seconds": 180,
+      "max_retries": 2
+    },
+    "subject_critic_v0_1": {
+      "model_name": "deepseek-v4-flash",
+      "temperature": 0.15,
+      "max_tokens": 4096,
+      "thinking_mode": "disabled",
+      "timeout_seconds": 180,
+      "max_retries": 2
+    },
+    "pedagogy_critic_v0_1": {
+      "model_name": "deepseek-v4-flash",
+      "temperature": 0.25,
+      "max_tokens": 4096,
+      "thinking_mode": "disabled",
+      "timeout_seconds": 180,
+      "max_retries": 2
+    },
+    "alignment_critic_v0_1": {
+      "model_name": "deepseek-v4-flash",
+      "temperature": 0.1,
+      "max_tokens": 4096,
+      "thinking_mode": "disabled",
+      "timeout_seconds": 180,
+      "max_retries": 2
+    },
+    "validator_v0_1": {
+      "model_name": "deepseek-v4-flash",
+      "temperature": 0.0,
+      "max_tokens": 12288,
+      "thinking_mode": "disabled",
+      "timeout_seconds": 180,
+      "max_retries": 2
+    },
+    "judge_v0_1": {
+      "model_name": "deepseek-v4-flash",
+      "temperature": 0.0,
+      "max_tokens": 4096,
+      "thinking_mode": "disabled",
+      "timeout_seconds": 180,
+      "max_retries": 2
+    },
+    "rewriter_v0_1": {
+      "model_name": "deepseek-v4-flash",
+      "temperature": 0.4,
+      "max_tokens": 24576,
+      "thinking_mode": "disabled",
+      "timeout_seconds": 180,
+      "max_retries": 2
+    }
+  },
+  "knowledge_policy": "heterogeneous",
+  "interaction_protocol": "independent_review",
+  "max_rounds": 3,
+  "optimization_max_rounds": 3,
+  "patience": 2,
+  "epsilon": 0.1,
+  "quality_threshold": 8.0,
+  "optimization_quality_threshold": 8.0,
+  "optimization_min_score_gain": 0.2,
+  "optimization_dimension_drop_tolerance": 0.3,
+  "critical_dimension_floor": 7.0,
+  "duration_tolerance_minutes": 2,
+  "max_model_calls": 42,
+  "max_total_tokens": 360000,
+  "optimization_max_model_calls": 60,
+  "optimization_max_total_tokens": 720000,
+  "max_estimated_cost": 5.0,
+  "max_runtime_seconds": 1800,
+  "enable_paper3": false,
+  "enable_docx": true
+}

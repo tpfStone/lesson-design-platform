@@ -1,0 +1,45 @@
+# ============================================================
+# 教案智能批注系统 — 配置文件
+# 核心理念：标注范例驱动的 Few-Shot Learning
+# ============================================================
+
+# --- LLM 配置 ---
+llm:
+  provider: deepseek           # deepseek | openai（预留）
+  model: deepseek-v4-flash     # deepseek-v4-pro | deepseek-v4-flash
+  temperature: 0.1
+  max_tokens: 24576            # 大教案批注多，防截断（原 16384）
+
+# --- API 密钥（优先使用环境变量）---
+api_keys:
+  deepseek: "${DEEPSEEK_API_KEY}"
+  openai: "${OPENAI_API_KEY}"
+
+# --- 数据目录 ---
+data:
+  examples_dir: "./data/examples"     # 标注示例存放目录
+  criteria_dir: "./data/criteria"     # 评分标准存放目录
+  plans_dir: "./data/plans"           # 待评教案存放目录
+
+# --- 输出目录 ---
+output:
+  dir: "./output"
+
+# --- 提示词配置 ---
+prompt:
+  # 示例数量上限（防止 token 超限）
+  max_examples: 2
+
+  # 评分标准类型选择
+  # "competition" = 比赛标准, "student" = 学生自制标准
+  # 2026-10-04：按课题组要求固定使用学生标准（竞赛标准已停用）
+  default_criteria: "student"
+
+  # 提示词变体（2026-10-04：固定 v2_guided，界面不再提供选项）
+  # default（平衡）| v2_guided（引导流程，实测最佳）| v3_strict（严格）
+  default_variant: "v2_guided"
+
+# --- 粗评锚点（分数段判断参照）---
+anchors:
+  enabled: true       # 是否注入粗评归纳的档位判断标准
+  mode: "both"        # score=仅评分阶段 | advice=仅建议阶段 | both=两者都注入

@@ -1,0 +1,230 @@
+{
+  "analysisSchemaVersion": "1.0",
+  "sessionId": "f7608464-1d83-4f5b-a9c1-441fa6f1a589",
+  "sourceVersionId": "REAL-FINAL-V1",
+  "modelMode": "REAL",
+  "postProcess": {
+    "inputIssueCount": 12,
+    "consolidatedRootCount": 6,
+    "finalIssueCount": 5,
+    "maxFinalIssues": 5,
+    "ranking": "severity > confidence > recurrence > evidenceCount"
+  },
+  "issues": [
+    {
+      "nativeIssueId": "ISSUE-01",
+      "category": "interaction_gap",
+      "severity": "HIGH",
+      "title": "例题与课堂练习缺少学生作答—反馈闭环",
+      "problem": "例题与课堂练习中多次出现同一类实施问题：教师提出问题、练习或检查后，没有形成稳定的“学生作答—教师依据作答反馈/纠错”闭环。具体表现包括：布置判断题后未等待学生作答即自行逐题讲解，形成提问—自答闭环；第二轮练习⑤—⑧布置后缺少答案核对与讲评反馈。",
+      "evidence": [
+        {
+          "eventId": "d75d4d00-ebd3-4821-9421-b9dccb3581c5",
+          "sequence": 6,
+          "speaker": "teacher",
+          "contentQuote": "下面这些式子，请大家一个个判断：哪些是一次函数，哪些不是？并说出你的依据。"
+        },
+        {
+          "eventId": "b61b6c62-783b-46cf-9214-40a2f885e8f9",
+          "sequence": 7,
+          "speaker": "teacher",
+          "contentQuote": "现在逐题过一遍"
+        },
+        {
+          "eventId": "b61b6c62-783b-46cf-9214-40a2f885e8f9",
+          "sequence": 7,
+          "speaker": "teacher",
+          "contentQuote": "下面轮到你们，请判断并说依据："
+        }
+      ],
+      "resolvedInSimulation": false,
+      "resolutionEvidenceEventIds": [],
+      "resolution": null,
+      "suggestedAction": "把该环节统一改造成“教师提问/布置任务 → 明确等待 → 学生独立或同伴作答 → 抽样展示 → 教师依据真实回答反馈/纠错”的闭环；答案和完整讲解应延后到学生表态之后，并用点名、投票、同伴互说等方式扩大参与面。",
+      "targetLessonSection": "m3",
+      "confidence": 0.85
+    },
+    {
+      "nativeIssueId": "ISSUE-02",
+      "category": "assessment_gap",
+      "severity": "HIGH",
+      "title": "课堂总结与学习检查缺少学生作答—反馈闭环",
+      "problem": "课堂总结与学习检查中多次出现同一类实施问题：教师提出问题、练习或检查后，没有形成稳定的“学生作答—教师依据作答反馈/纠错”闭环。具体表现包括：“学习检查”只给出题目与答案，未采集任何学生作答证据；回顾问题抛出后未等待应答，下一轮直接公布答案。",
+      "evidence": [
+        {
+          "eventId": "6c88a48e-631f-4924-8a9d-94915140df79",
+          "sequence": 8,
+          "speaker": "teacher",
+          "contentQuote": "先自己快速回想三个问题：一次函数的一般形式是什么？k 为什么不能等于 0？常函数和一次函数是什么关系？想好了，我们一起来对答案，最后我来做这一节课的总结。"
+        },
+        {
+          "eventId": "9df6a112-1483-4fbb-9c3c-200a0f9e6982",
+          "sequence": 9,
+          "speaker": "teacher",
+          "contentQuote": "（答案：①是一次函数；②常函数，不是；③一次函数，也是正比例；④次数为2，不是。）"
+        },
+        {
+          "eventId": "9df6a112-1483-4fbb-9c3c-200a0f9e6982",
+          "sequence": 9,
+          "speaker": "teacher",
+          "contentQuote": "同学们，这节课我们收口了，请大家先快速回答我三个问题。"
+        }
+      ],
+      "resolvedInSimulation": false,
+      "resolutionEvidenceEventIds": [],
+      "resolution": null,
+      "suggestedAction": "把该环节统一改造成“教师提问/布置任务 → 明确等待 → 学生独立或同伴作答 → 抽样展示 → 教师依据真实回答反馈/纠错”的闭环；答案和完整讲解应延后到学生表态之后，并用点名、投票、同伴互说等方式扩大参与面。",
+      "targetLessonSection": "m4",
+      "confidence": 0.85
+    },
+    {
+      "nativeIssueId": "ISSUE-03",
+      "category": "interaction_gap",
+      "severity": "MEDIUM",
+      "title": "一次函数概念导入缺少学生作答—反馈闭环",
+      "problem": "一次函数概念导入中多次出现同一类实施问题：教师提出问题、练习或检查后，没有形成稳定的“学生作答—教师依据作答反馈/纠错”闭环。具体表现包括：教师提出的 k、b 识别问题被悬挂，未回收；学生发言仅来自单一角色，全班多数学生未参与。",
+      "evidence": [
+        {
+          "eventId": "e8844c12-e223-4234-8ba5-cf9b23c83893",
+          "sequence": 1,
+          "speaker": "teacher",
+          "contentQuote": "请大家想想：出租车例子中，k 和 b 分别是多少？"
+        },
+        {
+          "eventId": "e25b7a77-ba05-4c60-ab78-b24632e84433",
+          "sequence": 2,
+          "speaker": "inquisitive_mind",
+          "contentQuote": "老师，为什么要规定 k≠0 呢？如果 k=0，y 就恒等于 b，不再随 x 变化了。那不就没有\"两个变量的对应关系\"了吗？还能叫一次函数吗？"
+        },
+        {
+          "eventId": "424cfab5-d689-4171-b41b-5de6a05091a1",
+          "sequence": 3,
+          "speaker": "teacher",
+          "contentQuote": "小检验：y = 5 是一次函数吗？y = 0·x + 3 呢？（答案：都不是。）"
+        }
+      ],
+      "resolvedInSimulation": false,
+      "resolutionEvidenceEventIds": [],
+      "resolution": null,
+      "suggestedAction": "把该环节统一改造成“教师提问/布置任务 → 明确等待 → 学生独立或同伴作答 → 抽样展示 → 教师依据真实回答反馈/纠错”的闭环；答案和完整讲解应延后到学生表态之后，并用点名、投票、同伴互说等方式扩大参与面。",
+      "targetLessonSection": "m1",
+      "confidence": 0.85
+    },
+    {
+      "nativeIssueId": "ISSUE-04",
+      "category": "assessment_gap",
+      "severity": "MEDIUM",
+      "title": "一次函数定义与边界辨析缺少学生作答—反馈闭环",
+      "problem": "一次函数定义与边界辨析中多次出现同一类实施问题：教师提出问题、练习或检查后，没有形成稳定的“学生作答—教师依据作答反馈/纠错”闭环。具体表现包括：检验性问题由教师自答，缺乏学生掌握情况的证据；引入提问后教师随即自答，未留出学生回应空间；观察窗口内无学生发言，推进由超时触发；材料讲授缺少学习检查与反馈环节。",
+      "evidence": [
+        {
+          "eventId": "e25b7a77-ba05-4c60-ab78-b24632e84433",
+          "sequence": 2,
+          "speaker": "inquisitive_mind",
+          "contentQuote": "老师，为什么要规定 k≠0 呢？"
+        },
+        {
+          "eventId": "424cfab5-d689-4171-b41b-5de6a05091a1",
+          "sequence": 3,
+          "speaker": "teacher",
+          "contentQuote": "小检验：y = 5 是一次函数吗？y = 0·x + 3 呢？（答案：都不是。）"
+        },
+        {
+          "eventId": "88e0b89a-08c3-44f0-8c4b-504f5921f33a",
+          "sequence": 4,
+          "speaker": "teacher",
+          "contentQuote": "带着一个问题听：y = 3(x - 1) + 2 是一次函数吗？k、b 各是多少？"
+        },
+        {
+          "eventId": "88e0b89a-08c3-44f0-8c4b-504f5921f33a",
+          "sequence": 4,
+          "speaker": "teacher",
+          "contentQuote": "一，把式子整理成标准形式，再判断 k 是否为 0；"
+        },
+        {
+          "eventId": "f2165ed1-5888-47f0-96d9-c71dd42bc8f9",
+          "sequence": 5,
+          "speaker": "teacher",
+          "contentQuote": "如 y = 3(x−1) + 2 = 3x − 1，k = 3，b = −1，是一次函数。"
+        },
+        {
+          "eventId": "f2165ed1-5888-47f0-96d9-c71dd42bc8f9",
+          "sequence": 5,
+          "speaker": "teacher",
+          "contentQuote": "最后提防伪装者：y = 2x² + 1（次数为 2）、y = 3/x + 1（自变量在分母）、y = 5（x 项消失），都不是。先整理，再判断。"
+        }
+      ],
+      "resolvedInSimulation": false,
+      "resolutionEvidenceEventIds": [],
+      "resolution": null,
+      "suggestedAction": "把该环节统一改造成“教师提问/布置任务 → 明确等待 → 学生独立或同伴作答 → 抽样展示 → 教师依据真实回答反馈/纠错”的闭环；答案和完整讲解应延后到学生表态之后，并用点名、投票、同伴互说等方式扩大参与面。",
+      "targetLessonSection": "m2",
+      "confidence": 0.8
+    },
+    {
+      "nativeIssueId": "ISSUE-05",
+      "category": "insufficient_explanation",
+      "severity": "MEDIUM",
+      "title": "对 k = 0 情形只给结论，未点明定义中 k≠0 的必要条件",
+      "problem": "教师讲解④ y = 6 时，只用\"x 项消失，即 k = 0\"判定其不是一次函数，但没有回到定义强调 k≠0 是一次函数成立的必要条件，也没有与紧随其后的⑦ y = 0·x + 7 建立对照。学生容易把\"能否写成 y=kx+b 的形式\"当成唯一标准，在此类常函数式题目上反复出错。",
+      "evidence": [
+        {
+          "eventId": "b61b6c62-783b-46cf-9214-40a2f885e8f9",
+          "sequence": 7,
+          "speaker": "teacher",
+          "contentQuote": "④ y = 6：y 恒为 6，x 项消失，即 k = 0，是常函数，**不是一次函数**。"
+        }
+      ],
+      "resolvedInSimulation": false,
+      "resolutionEvidenceEventIds": [],
+      "resolution": null,
+      "suggestedAction": "讲评时显性写出一次函数定义的两个条件并逐条对照，把④与⑦并列比较，明确区分\"能整理成 kx+b 形式\"与\"k≠0\"，再让学生复述依据。",
+      "targetLessonSection": "m3",
+      "confidence": 0.75
+    }
+  ],
+  "actionItems": [
+    {
+      "actionId": "ACTION-01",
+      "sourceIssueId": "ISSUE-01",
+      "action": "把该环节统一改造成“教师提问/布置任务 → 明确等待 → 学生独立或同伴作答 → 抽样展示 → 教师依据真实回答反馈/纠错”的闭环；答案和完整讲解应延后到学生表态之后，并用点名、投票、同伴互说等方式扩大参与面。",
+      "targetLessonSection": "m3",
+      "priority": "HIGH"
+    },
+    {
+      "actionId": "ACTION-02",
+      "sourceIssueId": "ISSUE-02",
+      "action": "把该环节统一改造成“教师提问/布置任务 → 明确等待 → 学生独立或同伴作答 → 抽样展示 → 教师依据真实回答反馈/纠错”的闭环；答案和完整讲解应延后到学生表态之后，并用点名、投票、同伴互说等方式扩大参与面。",
+      "targetLessonSection": "m4",
+      "priority": "HIGH"
+    },
+    {
+      "actionId": "ACTION-03",
+      "sourceIssueId": "ISSUE-03",
+      "action": "把该环节统一改造成“教师提问/布置任务 → 明确等待 → 学生独立或同伴作答 → 抽样展示 → 教师依据真实回答反馈/纠错”的闭环；答案和完整讲解应延后到学生表态之后，并用点名、投票、同伴互说等方式扩大参与面。",
+      "targetLessonSection": "m1",
+      "priority": "MEDIUM"
+    },
+    {
+      "actionId": "ACTION-04",
+      "sourceIssueId": "ISSUE-04",
+      "action": "把该环节统一改造成“教师提问/布置任务 → 明确等待 → 学生独立或同伴作答 → 抽样展示 → 教师依据真实回答反馈/纠错”的闭环；答案和完整讲解应延后到学生表态之后，并用点名、投票、同伴互说等方式扩大参与面。",
+      "targetLessonSection": "m2",
+      "priority": "MEDIUM"
+    },
+    {
+      "actionId": "ACTION-05",
+      "sourceIssueId": "ISSUE-05",
+      "action": "讲评时显性写出一次函数定义的两个条件并逐条对照，把④与⑦并列比较，明确区分\"能整理成 kx+b 形式\"与\"k≠0\"，再让学生复述依据。",
+      "targetLessonSection": "m3",
+      "priority": "MEDIUM"
+    }
+  ],
+  "warnings": [
+    "issue consolidation: merged candidates ISSUE-01, ISSUE-03 at target m1 into one engagement/feedback issue",
+    "issue consolidation: merged candidates ISSUE-02, ISSUE-05, ISSUE-06, ISSUE-07 at target m2 into one engagement/feedback issue",
+    "issue consolidation: merged candidates ISSUE-08, ISSUE-09 at target m3 into one engagement/feedback issue",
+    "issue consolidation: merged candidates ISSUE-11, ISSUE-12 at target m4 into one engagement/feedback issue",
+    "issue ranking: kept top 5 of 6 consolidated issues"
+  ]
+}

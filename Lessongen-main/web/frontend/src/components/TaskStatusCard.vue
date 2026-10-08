@@ -1,0 +1,3 @@
+<script setup lang="ts">withDefaults(defineProps<{ title: string; status: string; description?: string; tone?: "active" | "complete" | "attention" | "error" | "neutral" }>(), { description: "", tone: "neutral" });</script>
+<template><article class="task-status v2-card"><div><strong>{{ title }}</strong><p v-if="description">{{ description }}</p></div><span class="v2-status" :class="`v2-status--${tone}`">{{ status }}</span><slot /></article></template>
+<style scoped>.task-status{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:17px 19px}.task-status p{margin:5px 0 0;color:var(--color-text-secondary);font-size:13px}</style>

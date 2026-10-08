@@ -1,0 +1,579 @@
+openapi: 3.1.0
+info:
+  title: 灵犀教案 Web API
+  version: 0.1.0
+  license:
+    name: UNLICENSED
+    identifier: LicenseRef-Proprietary
+  description: |
+    Spring Boot 对浏览器暴露的 MVP 契约。所有生成与优化操作均为异步任务；
+    本契约不暴露 Python 引擎、模型参数、Prompt、思维链或本地文件路径。
+servers:
+  - url: /api/v1
+tags:
+  - name: LessonJobs
+    description: 创建、查询并订阅教案生成与优化任务。
+  - name: Results
+    description: 查询结构化结果和下载经过完整性校验的产物。
+
+# MVP 运行在受信本机/内网且尚未引入用户身份；显式声明无公开认证，避免被误读为遗漏。
+security: []
+
+paths:
+  /lesson-jobs/generate:
+    post:
+      tags: [LessonJobs]
+      operationId: createGenerateJob
+      summary: 创建教案生成任务
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenerateLessonJobRequest'
+      responses:
+        '202':
+          description: 任务已入队
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobAccepted'
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '409': { $ref: '#/components/responses/Conflict' }
+        '422': { $ref: '#/components/responses/UnprocessableEntity' }
+
+  /lesson-jobs/optimize:
+    post:
+      tags: [LessonJobs]
+      operationId: createOptimizeJob
+      summary: 上传 DOCX 并创建教案优化任务
+      description: 输出采用系统标准 Word 模板，不保证保留原文档排版。
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [request, document]
+              properties:
+                request:
+                  $ref: '#/components/schemas/OptimizeLessonJobRequest'
+                document:
+                  type: string
+                  format: binary
+            encoding:
+              request:
+                contentType: application/json
+              document:
+                contentType: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+      responses:
+        '202':
+          description: 文件已安全落盘，任务已入队
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobAccepted'
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '409': { $ref: '#/components/responses/Conflict' }
+        '413':
+          description: 文件超过允许大小
+          content:
+            application/problem+json:
+              schema: { $ref: '#/components/schemas/ProblemDetail' }
+        '415':
+          description: 文件不是受支持且安全的 DOCX
+          content:
+            application/problem+json:
+              schema: { $ref: '#/components/schemas/ProblemDetail' }
+        '422': { $ref: '#/components/responses/UnprocessableEntity' }
+
+  /lesson-jobs:
+    get:
+      tags: [LessonJobs]
+      operationId: listLessonJobs
+      summary: 查询近期任务
+      parameters:
+        - name: page
+          in: query
+          schema: { type: integer, minimum: 0, default: 0 }
+        - name: size
+          in: query
+          schema: { type: integer, minimum: 1, maximum: 50, default: 12 }
+        - name: mode
+          in: query
+          schema: { $ref: '#/components/schemas/JobMode' }
+        - name: status
+          in: query
+          schema: { $ref: '#/components/schemas/JobStatus' }
+      responses:
+        '200':
+          description: 分页任务摘要
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/JobPage' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+
+  /lesson-jobs/{jobId}:
+    get:
+      tags: [LessonJobs]
+      operationId: getLessonJob
+      summary: 查询任务详情与当前状态
+      parameters:
+        - $ref: '#/components/parameters/JobId'
+      responses:
+        '200':
+          description: 任务详情
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/LessonJobDetail' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /lesson-jobs/{jobId}/events:
+    get:
+      tags: [LessonJobs]
+      operationId: streamLessonJobEvents
+      summary: 订阅任务公开进度
+      description: |
+        使用标准 Server-Sent Events。事件 id 等于任务内 sequence；事件 data 是
+        JobEvent 的 JSON。支持 Last-Event-ID 补发，心跳为注释行。
+      parameters:
+        - $ref: '#/components/parameters/JobId'
+        - name: Last-Event-ID
+          in: header
+          required: false
+          schema: { type: integer, minimum: 0 }
+      responses:
+        '200':
+          description: SSE 流；事件名为 job.snapshot、job.progress 或 job.terminal
+          content:
+            text/event-stream:
+              schema: { $ref: '#/components/schemas/JobEvent' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /lesson-jobs/{jobId}/result:
+    get:
+      tags: [Results]
+      operationId: getLessonJobResult
+      summary: 获取最佳教案与内部评价摘要
+      parameters:
+        - $ref: '#/components/parameters/JobId'
+      responses:
+        '200':
+          description: 已形成的最佳结果
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/LessonResult' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409':
+          description: 任务尚未形成可展示版本
+          content:
+            application/problem+json:
+              schema: { $ref: '#/components/schemas/ProblemDetail' }
+
+  /lesson-jobs/{jobId}/artifacts:
+    get:
+      tags: [Results]
+      operationId: listLessonJobArtifacts
+      summary: 查询任务产物
+      parameters:
+        - $ref: '#/components/parameters/JobId'
+      responses:
+        '200':
+          description: 可下载产物
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Artifact' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /lesson-jobs/{jobId}/artifacts/{artifactId}/download:
+    get:
+      tags: [Results]
+      operationId: downloadLessonJobArtifact
+      summary: 下载任务产物
+      parameters:
+        - $ref: '#/components/parameters/JobId'
+        - $ref: '#/components/parameters/ArtifactId'
+      responses:
+        '200':
+          description: 文件流，服务端设置安全 Content-Disposition 与 MIME
+          headers:
+            Content-Disposition:
+              schema: { type: string }
+            Digest:
+              description: 可选的 SHA-256 完整性摘要
+              schema: { type: string }
+          content:
+            application/octet-stream:
+              schema: { type: string, format: binary }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+components:
+  parameters:
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: true
+      description: 客户端每次明确提交生成一个 UUID；重复点击复用同一值。
+      schema: { type: string, minLength: 16, maxLength: 128 }
+    JobId:
+      name: jobId
+      in: path
+      required: true
+      schema: { type: string, pattern: '^[0-9A-HJKMNP-TV-Z]{26}$' }
+    ArtifactId:
+      name: artifactId
+      in: path
+      required: true
+      schema: { type: string, pattern: '^[0-9A-HJKMNP-TV-Z]{26}$' }
+
+  responses:
+    BadRequest:
+      description: 请求语法或字段不合法
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/ProblemDetail' }
+    Conflict:
+      description: 幂等键冲突或资源状态不允许该操作
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/ProblemDetail' }
+    NotFound:
+      description: 资源不存在
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/ProblemDetail' }
+    UnprocessableEntity:
+      description: 请求可解析但不满足业务约束
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/ProblemDetail' }
+
+  schemas:
+    JobMode:
+      type: string
+      enum: [GENERATE, OPTIMIZE]
+    JobStatus:
+      type: string
+      enum: [QUEUED, DISPATCHING, PREPROCESSING, RUNNING, EXPORTING, COMPLETED, NEEDS_HUMAN, FAILED]
+    LessonStyle:
+      type: string
+      enum:
+        - choose_the_best_fit_for_this_topic
+        - inquiry_through_cognitive_conflict
+        - authentic_problem_driven
+        - dialogue_and_discussion
+        - project_or_task_based
+        - close_reading_and_evidence
+    DetailLevel:
+      type: string
+      enum: [standard, showcase]
+
+    BaseLessonInput:
+      type: object
+      required: [subject, grade, topic]
+      properties:
+        subject: { type: string, minLength: 1, maxLength: 64 }
+        grade: { type: string, minLength: 1, maxLength: 64 }
+        topic: { type: string, minLength: 1, maxLength: 255 }
+        durationMinutes: { type: integer, minimum: 5, maximum: 240, default: 45 }
+        courseInformation: { type: string, maxLength: 4000 }
+        textbookVersion: { type: string, maxLength: 255 }
+        textbookContent: { type: string, maxLength: 30000 }
+        curriculumStandards:
+          type: array
+          maxItems: 50
+          items: { type: string, minLength: 1, maxLength: 1000 }
+        learningObjectives:
+          type: array
+          maxItems: 20
+          items: { type: string, minLength: 1, maxLength: 1000 }
+        studentProfile: { type: string, maxLength: 8000 }
+        classSize: { type: integer, minimum: 1, maximum: 200 }
+        availableResources:
+          type: array
+          maxItems: 50
+          items: { type: string, minLength: 1, maxLength: 500 }
+        additionalRequirements: { type: string, maxLength: 8000 }
+        lessonStyle: { $ref: '#/components/schemas/LessonStyle' }
+        detailLevel: { $ref: '#/components/schemas/DetailLevel' }
+        retryOfJobId: { type: string, pattern: '^[0-9A-HJKMNP-TV-Z]{26}$' }
+
+    GenerateLessonJobRequest:
+      allOf:
+        - $ref: '#/components/schemas/BaseLessonInput'
+      unevaluatedProperties: false
+
+    OptimizeLessonJobRequest:
+      allOf:
+        - $ref: '#/components/schemas/BaseLessonInput'
+        - type: object
+          properties:
+            optimizationFocus:
+              type: array
+              maxItems: 20
+              items: { type: string, minLength: 1, maxLength: 1000 }
+            mustPreserveContent:
+              type: array
+              maxItems: 20
+              items: { type: string, minLength: 1, maxLength: 2000 }
+      unevaluatedProperties: false
+
+    JobLinks:
+      type: object
+      additionalProperties: false
+      required: [self, events, result, artifacts]
+      properties:
+        self: { type: string }
+        events: { type: string }
+        result: { type: string }
+        artifacts: { type: string }
+
+    JobAccepted:
+      type: object
+      additionalProperties: false
+      required: [jobId, status, createdAt, links]
+      properties:
+        jobId: { type: string }
+        status: { $ref: '#/components/schemas/JobStatus' }
+        createdAt: { type: string, format: date-time }
+        links: { $ref: '#/components/schemas/JobLinks' }
+
+    JobUsage:
+      type: object
+      additionalProperties: false
+      required: [modelCallCount, inputTokens, outputTokens, estimatedCost]
+      properties:
+        modelCallCount: { type: integer, minimum: 0 }
+        inputTokens: { type: integer, minimum: 0 }
+        outputTokens: { type: integer, minimum: 0 }
+        estimatedCost: { type: number, minimum: 0 }
+
+    LessonJobSummary:
+      type: object
+      additionalProperties: false
+      required: [jobId, mode, status, subject, grade, topic, createdAt, progressPercent]
+      properties:
+        jobId: { type: string }
+        mode: { $ref: '#/components/schemas/JobMode' }
+        status: { $ref: '#/components/schemas/JobStatus' }
+        subject: { type: string }
+        grade: { type: string }
+        topic: { type: string }
+        currentStage: { type: [string, 'null'] }
+        currentRound: { type: integer, minimum: 0 }
+        progressPercent: { type: integer, minimum: 0, maximum: 100 }
+        createdAt: { type: string, format: date-time }
+        finishedAt: { type: [string, 'null'], format: date-time }
+
+    LessonJobDetail:
+      allOf:
+        - $ref: '#/components/schemas/LessonJobSummary'
+        - type: object
+          required: [durationMinutes, usage, links]
+          properties:
+            durationMinutes: { type: integer }
+            pipelineStatus: { type: [string, 'null'], enum: [completed, needs_human, failed, null] }
+            stopReason: { type: [string, 'null'] }
+            bestVersionId: { type: [string, 'null'] }
+            lastVersionId: { type: [string, 'null'] }
+            errorCode: { type: [string, 'null'] }
+            errorMessage: { type: [string, 'null'] }
+            usage: { $ref: '#/components/schemas/JobUsage' }
+            links: { $ref: '#/components/schemas/JobLinks' }
+
+    JobPage:
+      type: object
+      additionalProperties: false
+      required: [items, page, size, totalElements, totalPages]
+      properties:
+        items:
+          type: array
+          items: { $ref: '#/components/schemas/LessonJobSummary' }
+        page: { type: integer, minimum: 0 }
+        size: { type: integer, minimum: 1 }
+        totalElements: { type: integer, minimum: 0 }
+        totalPages: { type: integer, minimum: 0 }
+
+    JobEvent:
+      type: object
+      additionalProperties: false
+      required: [sequence, eventType, stage, progressPercent, message, occurredAt]
+      properties:
+        sequence: { type: integer, minimum: 0 }
+        eventType: { type: string, enum: [job.snapshot, job.progress, job.terminal] }
+        stage: { type: string }
+        roundIndex: { type: [integer, 'null'], minimum: 0 }
+        versionId: { type: [string, 'null'] }
+        progressPercent: { type: integer, minimum: 0, maximum: 100 }
+        message: { type: string }
+        occurredAt: { type: string, format: date-time }
+
+    RubricScores:
+      type: object
+      additionalProperties: false
+      required:
+        - curriculumAlignment
+        - knowledgeAccuracy
+        - teachingLogic
+        - classroomFeasibility
+        - differentiatedInstruction
+        - studentEngagement
+        - assessmentDesign
+        - languageAndFormat
+      properties:
+        curriculumAlignment: { type: number, minimum: 0, maximum: 10 }
+        knowledgeAccuracy: { type: number, minimum: 0, maximum: 10 }
+        teachingLogic: { type: number, minimum: 0, maximum: 10 }
+        classroomFeasibility: { type: number, minimum: 0, maximum: 10 }
+        differentiatedInstruction: { type: number, minimum: 0, maximum: 10 }
+        studentEngagement: { type: number, minimum: 0, maximum: 10 }
+        assessmentDesign: { type: number, minimum: 0, maximum: 10 }
+        languageAndFormat: { type: number, minimum: 0, maximum: 10 }
+
+    ChangeSummary:
+      type: object
+      additionalProperties: false
+      required: [summary]
+      properties:
+        summary: { type: string }
+        targetPath: { type: [string, 'null'] }
+        sourceCritiqueIds:
+          type: array
+          items: { type: string }
+
+    LessonResult:
+      type: object
+      additionalProperties: false
+      required:
+        - jobId
+        - status
+        - bestVersionId
+        - lastVersionId
+        - bestLessonPlan
+        - scores
+        - overallScore
+        - scoreNotice
+        - changes
+        - unresolvedIssues
+      properties:
+        jobId: { type: string }
+        status: { $ref: '#/components/schemas/JobStatus' }
+        stopReason: { type: [string, 'null'] }
+        bestVersionId: { type: string }
+        lastVersionId: { type: string }
+        bestLessonPlan:
+          type: object
+          description: |
+            Python LessonPlanDocument 的公开投影。第一版由 Java 以 JsonNode 读取并仅移除内部字段，
+            不在 Java 数据库中复制完整 Pydantic 模型。
+          additionalProperties: true
+        scores: { $ref: '#/components/schemas/RubricScores' }
+        overallScore: { type: number, minimum: 0, maximum: 10 }
+        scoreNotice:
+          type: string
+          const: 内部质量信号，不代表正式教学效果评价
+        optimization:
+          description: 优化任务的原稿与交付稿内容对比及审查轨迹；生成任务为 null。
+          anyOf:
+            - { $ref: '#/components/schemas/OptimizationSummary' }
+            - { type: 'null' }
+        review:
+          description: 可选的独立审查证据；旧任务可能没有该字段。
+          anyOf:
+            - { $ref: '#/components/schemas/ReviewSummary' }
+            - { type: 'null' }
+        changes:
+          type: array
+          items: { $ref: '#/components/schemas/ChangeSummary' }
+        unresolvedIssues:
+          type: array
+          items: { type: string }
+        parseWarnings:
+          type: array
+          items: { type: string }
+
+    ReviewSummary:
+      type: object
+      additionalProperties: false
+      required: [policy, reviewed_roles, validator_completed, independent_review_complete, content_changed]
+      properties:
+        policy: { type: string }
+        reviewed_roles:
+          type: array
+          items: { type: string }
+        validator_completed: { type: boolean }
+        independent_review_complete: { type: boolean }
+        content_changed: { type: boolean }
+
+    OptimizationSummary:
+      type: object
+      additionalProperties: true
+      required: [outcome, message, content_changed, changed_section_count, changed_sections, baseline_score, selected_score, score_notice, critique_count, rewrite_count, rounds]
+      properties:
+        outcome:
+          type: string
+          enum: [changed, revisions_not_selected, reviewed_unchanged, not_reviewed]
+        message: { type: string }
+        content_changed: { type: boolean }
+        changed_section_count: { type: integer, minimum: 0 }
+        changed_sections:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        baseline_score: { type: [number, 'null'] }
+        selected_score: { type: [number, 'null'] }
+        score_notice: { type: string }
+        critique_count: { type: integer, minimum: 0 }
+        rewrite_count: { type: integer, minimum: 0 }
+        rounds:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+
+    Artifact:
+      type: object
+      additionalProperties: false
+      required: [artifactId, type, displayName, mediaType, sizeBytes, sha256, downloadUrl]
+      properties:
+        artifactId: { type: string }
+        type:
+          type: string
+          enum: [BEST_DOCX, BEST_MARKDOWN, BEST_JSON, RECOVERY_JSON, RECOVERY_MARKDOWN, TRACE, PROCESS_REPORT, OPTIMIZATION_REPORT_JSON, OPTIMIZATION_REPORT_MARKDOWN, ORIGINAL_DOCX, NORMALIZED_INPUT_JSON]
+        displayName: { type: string }
+        mediaType: { type: string }
+        sizeBytes: { type: integer, minimum: 0 }
+        sha256: { type: string, pattern: '^[a-f0-9]{64}$' }
+        downloadUrl: { type: string }
+
+    InvalidParameter:
+      type: object
+      additionalProperties: false
+      required: [name, reason]
+      properties:
+        name: { type: string }
+        reason: { type: string }
+
+    ProblemDetail:
+      type: object
+      required: [type, title, status, code, detail, correlationId]
+      properties:
+        type: { type: string, format: uri-reference }
+        title: { type: string }
+        status: { type: integer, minimum: 400, maximum: 599 }
+        code:
+          type: string
+          description: 稳定机器错误码，例如 INVALID_DOCX、ENGINE_BALANCE_EXHAUSTED。
+        detail: { type: string }
+        instance: { type: string, format: uri-reference }
+        correlationId: { type: string }
+        invalidParameters:
+          type: array
+          items: { $ref: '#/components/schemas/InvalidParameter' }

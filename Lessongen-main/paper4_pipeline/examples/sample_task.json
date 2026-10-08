@@ -1,0 +1,42 @@
+{
+  "schema_version": "paper4-task-v0.1",
+  "task_id": "math_pythagorean_demo_zh",
+  "mode": "generate",
+  "language": "zh",
+  "subject": "数学",
+  "grade": "八年级",
+  "topic": "勾股定理",
+  "duration_minutes": 45,
+  "course_information": "八年级数学，勾股定理第一课时，45分钟",
+  "textbook_content": "在直角三角形中，两条直角边的平方和等于斜边的平方；使用定理前必须确认直角条件。",
+  "curriculum_standards": [
+    "工程演示依据：理解勾股定理及其适用条件；正式实验前须替换为经审核的课程标准原文或摘要。"
+  ],
+  "learning_objectives": [
+    "理解勾股定理及其适用条件",
+    "能用定理完成简单边长计算",
+    "通过面积活动表达验证思路"
+  ],
+  "student_profile": "学生已学习平方、平方根和三角形基本概念。",
+  "class_constraints": {
+    "class_size": 40,
+    "must_include_student_activity": true
+  },
+  "available_resources": ["方格纸", "多媒体课件"],
+  "required_sections": [
+    "content_analysis",
+    "student_analysis",
+    "learning_objectives",
+    "procedure_steps",
+    "assessment_plan"
+  ],
+  "rubric_id": "paper4-eight-dimension-v0.1",
+  "source_refs": ["project_fixture:math_pythagorean"],
+  "metadata": {
+    "source_kind": "engineering_fixture",
+    "review_status": "pending_subject_review",
+    "detail_level": "showcase",
+    "creative_intensity": "high_but_grounded",
+    "lesson_style": "inquiry_through_cognitive_conflict"
+  }
+}

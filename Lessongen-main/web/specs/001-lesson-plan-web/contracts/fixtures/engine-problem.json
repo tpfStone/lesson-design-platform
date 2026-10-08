@@ -1,0 +1,8 @@
+{
+  "type": "about:blank",
+  "title": "请求内容不合法",
+  "status": 422,
+  "detail": "内部请求字段缺失或格式错误",
+  "code": "ENGINE_INVALID_REQUEST",
+  "correlation_id": "01J00000000000000000000000"
+}

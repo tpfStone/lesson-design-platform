@@ -1,0 +1,55 @@
+{
+  "course": "Introduction to Large Language Models",
+  "materials": [
+    {
+      "id": 1,
+      "title": "What is an LLM?",
+      "teaching_script": "大语言模型（LLM）是一种基于深度学习的语言模型，通过在海量文本上训练，学会『给定前文，预测下一个词』。它不是存着知识的数据库，而是一个概率模型：给定上下文，输出下一个词的概率分布。模型能力随规模（参数量、训练数据量、算力）增长而涌现，因此叫『大』语言模型。典型代表包括 GPT、GLM 等系列。",
+      "key_points": [
+        "LLM 的核心任务是下一个词预测（next-token prediction）",
+        "LLM 是概率模型，不是知识数据库",
+        "规模（参数、数据、算力）带来能力涌现"
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Tokenization",
+      "teaching_script": "模型无法直接读文字，需要先把文本切成 token。token 可以是词、子词或字符，常见算法如 BPE 会把高频片段合并成词表。中文一个字通常是一到两个 token，英文一个词约 1.3 个 token。tokenization 决定了模型的『阅读单位』，也影响上下文长度和成本。",
+      "key_points": [
+        "token 是模型处理文本的基本单位",
+        "BPE 等子词算法平衡了词表大小和覆盖率",
+        "tokenization 影响上下文长度限制与调用成本"
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Transformer",
+      "teaching_script": "Transformer 是现代 LLM 的 backbone，2017 年由《Attention is All You Need》提出。它完全基于注意力机制，抛弃了 RNN 的循环结构，因此可以并行训练、更容易堆叠深层。编码器-解码器结构后来演化出 decoder-only 架构（如 GPT），成为当今 LLM 的主流选择。",
+      "key_points": [
+        "Transformer 用注意力取代循环，训练可并行",
+        "GPT 系列采用 decoder-only 架构",
+        "可堆叠性是大规模预训练的基础"
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Attention",
+      "teaching_script": "注意力机制让每个 token 都能『看到』序列中的其他 token，并按相关性加权聚合信息。Query、Key、Value 三者通过点积计算相似度，再 softmax 得到权重。多头注意力让模型同时在不同子空间里关注不同模式。相比 RNN 沿时间逐步传递信息，注意力是任意两位置直接相连，长距离依赖不会被稀释。",
+      "key_points": [
+        "Q/K/V 点积 + softmax 计算加权聚合",
+        "多头注意力在不同子空间捕捉不同模式",
+        "任意位置直接交互，适合长距离依赖"
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Autoregressive Generation",
+      "teaching_script": "LLM 的生成是自回归的：每次根据已有上文预测下一个 token，把它拼回输入，再预测下一个，循环往复。temperature 控制采样的随机性：越低越确定，越高越发散。这就是为什么模型是一个 token 一个 token 逐字吐出来的，也是『幻觉』可能累积的地方。",
+      "key_points": [
+        "生成 = 循环执行『预测下一个 token』",
+        "temperature 控制采样随机性",
+        "逐 token 生成机制与幻觉现象相关"
+      ]
+    }
+  ]
+}

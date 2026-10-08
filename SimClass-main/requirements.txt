@@ -1,0 +1,7 @@
+python-dotenv
+requests
+pytest
+fastapi>=0.115
+pydantic>=2.7
+uvicorn>=0.30
+httpx>=0.27

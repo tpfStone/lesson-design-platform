@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "title": "情境导入",
+    "teaching_script": "情境导入\n教师展示生活中的身份证号码和邮政编码，引导学生思考数字的作用。\n\n",
+    "key_points": [],
+    "metadata": {
+      "source": "F4 current-state",
+      "section_id": "31c69fe9-584e-4f52-95b0-c289b2cba787",
+      "section_type": "introduction",
+      "order_index": 1
+    }
+  },
+  {
+    "id": 2,
+    "title": "新知探究",
+    "teaching_script": "新知探究\n教师引导学生观察不同编码，讨论每一位数字所表示的含义，并总结数字编码的基本规律。\n\n",
+    "key_points": [],
+    "metadata": {
+      "source": "F4 current-state",
+      "section_id": "2999653a-fb76-4c26-abf3-e14474362f1b",
+      "section_type": "exploration",
+      "order_index": 2
+    }
+  },
+  {
+    "id": 3,
+    "title": "巩固练习",
+    "teaching_script": "巩固练习\n学生尝试根据给出的规则设计自己的编号，并说明每一位数字代表的含义。\n\n",
+    "key_points": [],
+    "metadata": {
+      "source": "F4 current-state",
+      "section_id": "bba0b8de-9d97-4fd7-9513-47da1083f8c8",
+      "section_type": "practice",
+      "order_index": 3
+    }
+  },
+  {
+    "id": 4,
+    "title": "课堂小结",
+    "teaching_script": "课堂小结\n教师带领学生总结数字编码的特点以及数字编码在生活中的应用。",
+    "key_points": [],
+    "metadata": {
+      "source": "F4 current-state",
+      "section_id": "c2003891-115c-45c1-9f7a-2115ac9cb240",
+      "section_type": "summary",
+      "order_index": 4
+    }
+  }
+]

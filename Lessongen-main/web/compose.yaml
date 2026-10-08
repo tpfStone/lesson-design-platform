@@ -1,0 +1,24 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: lesoongen-mysql
+    restart: unless-stopped
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_0900_ai_ci
+    environment:
+      MYSQL_DATABASE: lesoongen
+      MYSQL_USER: lesoongen
+      MYSQL_PASSWORD: ${DB_PASSWORD:-change-me-before-use}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-change-root-before-use}
+      TZ: Asia/Shanghai
+    ports:
+      - "3307:3306"
+    volumes:
+      - lesoongen_mysql:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-p${MYSQL_ROOT_PASSWORD:-change-root-before-use}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  lesoongen_mysql:

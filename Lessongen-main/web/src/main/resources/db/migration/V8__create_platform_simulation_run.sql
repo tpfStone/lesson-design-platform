@@ -1,0 +1,30 @@
+CREATE TABLE platform_simulation_run (
+    id CHAR(26) PRIMARY KEY,
+    lesson_id CHAR(26) NOT NULL,
+    version_id CHAR(26) NOT NULL,
+    f4_session_id CHAR(36) NOT NULL,
+    f4_lesson_plan_id CHAR(36) NOT NULL,
+    f3_session_id CHAR(36) NOT NULL,
+    status VARCHAR(24) NOT NULL,
+    requested_rounds SMALLINT NOT NULL,
+    completed_rounds SMALLINT NOT NULL,
+    material_count SMALLINT NOT NULL,
+    final_classroom_status VARCHAR(24) NULL,
+    history_count INT NOT NULL,
+    http_chain VARCHAR(16) NOT NULL,
+    f4_provider VARCHAR(24) NOT NULL,
+    f3_model_content VARCHAR(24) NOT NULL,
+    result_json LONGTEXT NOT NULL,
+    result_sha256 CHAR(64) NOT NULL,
+    summary_markdown LONGTEXT NOT NULL,
+    started_at DATETIME(6) NOT NULL,
+    finished_at DATETIME(6) NOT NULL,
+    created_at DATETIME(6) NOT NULL,
+    CONSTRAINT fk_simulation_lesson
+        FOREIGN KEY (lesson_id) REFERENCES platform_lesson(id),
+    CONSTRAINT fk_simulation_version
+        FOREIGN KEY (version_id) REFERENCES platform_lesson_version(id),
+    CONSTRAINT uq_simulation_f3_session UNIQUE (f3_session_id),
+    INDEX idx_simulation_lesson_created (lesson_id, created_at),
+    INDEX idx_simulation_version_created (version_id, created_at)
+);

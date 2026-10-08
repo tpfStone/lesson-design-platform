@@ -1,0 +1,77 @@
+F3 完整课堂模拟修改文件清单（2026-10-05）
+
+【修改】
+app/classroom/classroom.py
+  - _run_one_turn 返回 DialogueEntry，修复原 classroom_v2.step() 无返回值问题
+  - 增加 last_decision / last_turn_error 供正式 EventStore 观察
+  - Manager/Agent LLMError 后清理 pending_user_message，不杀死课堂
+
+app/api/classroom_api.py
+  - 升级为正式 v3 多会话 API
+  - 新增 sessions/events/messages/pause/resume/end/settings/analyze/result/artifacts
+  - 保留旧 start/message/state 迁移适配
+
+requirements.txt
+  - 增加 fastapi / pydantic / uvicorn / httpx
+
+.env.example
+  - 增加 F3_MODEL_MODE / F3_STORAGE_ROOT
+
+README.md
+  - 增加 F3 正式 API 启动与边界说明
+
+【新增源码】
+app/contracts/__init__.py
+app/contracts/session.py
+app/contracts/event.py
+app/contracts/analysis.py
+app/storage/__init__.py
+app/storage/event_store.py
+app/analysis/evidence_validator.py
+app/analysis/issue_agent.py
+app/analysis/report_builder.py
+app/web/__init__.py
+app/web/service.py
+
+【新增测试】
+tests/f3_helpers.py
+tests/test_classroom_llm_error.py
+tests/test_session_service.py
+tests/test_session_isolation.py
+tests/test_event_contract.py
+tests/test_stop_conditions.py
+tests/test_issue_agent.py
+tests/test_evidence_validator.py
+tests/test_api_contract.py
+tests/test_legacy_runner_compat.py
+
+【新增样本】
+sample/session_record.json
+sample/events.json
+sample/classroom_summary.md
+sample/issue_analysis.json
+sample/action_items.md
+sample/api_requests_and_responses.md
+pytest_output.txt
+real_model_run_log.txt
+
+【新增文档】
+documentation/F3完整课堂模拟_API说明.md
+documentation/F3完整课堂模拟_数据协议.md
+documentation/F3完整课堂模拟_安装启动说明.md
+documentation/F3完整课堂模拟_验收记录.md
+documentation/F3完整课堂模拟_修改文件清单.txt
+documentation/F3接入总平台_交接说明.md
+
+【明确未做】
+- 未把学姐独立 web 文件夹覆盖进正式 F3
+- 未修改 Lessongen-main/F2/F4 总 Web
+- 未伪造 REAL 模型验收结果
+
+[2026-10-05 Issue 后处理增强]
+新增 app/analysis/issue_consolidator.py
+修改 app/analysis/issue_agent.py
+新增 tests/test_issue_consolidator.py
+修改 tests/test_issue_agent.py
+更新 API说明/数据协议/验收记录/总平台交接说明
+功能：候选问题 -> EvidenceValidator -> 同质 Issue 合并 -> severity/confidence 排序 -> Top 5 -> 最终 EvidenceValidator -> actionItems

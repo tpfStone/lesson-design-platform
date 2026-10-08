@@ -1,0 +1,39 @@
+{
+  "analysisSchemaVersion": "1.0",
+  "sessionId": "6355d918-0a67-4b09-996b-d7935fa493d3",
+  "sourceVersionId": "VERSION-SAMPLE-001",
+  "modelMode": "MOCK",
+  "issues": [
+    {
+      "nativeIssueId": "ISSUE-01",
+      "category": "interaction_gap",
+      "severity": "MEDIUM",
+      "title": "课堂提问缺少后续显式回应",
+      "problem": "课堂中出现了提问，但在同一材料范围内未观察到后续 answer_question 事件。",
+      "evidence": [
+        {
+          "eventId": "1c462f11-0c7d-4391-9799-f7eab607a9f3",
+          "sequence": 5,
+          "speaker": "inquisitive_mind",
+          "contentQuote": "[MockLLM] 我有个问题：这个概念和我们刚才讲的内容有什么联系？（模拟回复）"
+        }
+      ],
+      "resolvedInSimulation": false,
+      "resolutionEvidenceEventIds": [],
+      "resolution": null,
+      "suggestedAction": "在对应教案环节增加对该问题的回应或检查理解的追问。",
+      "targetLessonSection": "例题辨析",
+      "confidence": 0.9
+    }
+  ],
+  "actionItems": [
+    {
+      "actionId": "ACTION-01",
+      "sourceIssueId": "ISSUE-01",
+      "action": "在对应教案环节增加对该问题的回应或检查理解的追问。",
+      "targetLessonSection": "例题辨析",
+      "priority": "MEDIUM"
+    }
+  ],
+  "warnings": []
+}

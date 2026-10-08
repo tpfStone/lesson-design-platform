@@ -1,0 +1,10 @@
+{"task_id":"math_pythagorean_zh","risks":["把定理用于任意三角形","混淆直角边和斜边"]}
+{"task_id":"math_pythagorean_en","risks":["Applying the theorem to any triangle","Confusing a leg with the hypotenuse"]}
+{"task_id":"english_simple_past_zh","risks":["did后仍使用过去式","只练词形而缺少交际语境"]}
+{"task_id":"english_simple_past_en","risks":["Keeping a past form after did","Teaching forms without a communicative context"]}
+{"task_id":"chemistry_changes_zh","risks":["把所有颜色变化都判为化学变化","安排不安全的未知物质操作"]}
+{"task_id":"chemistry_changes_en","risks":["Treating every color change as chemical","Using unsafe unknown-substance procedures"]}
+{"task_id":"science_photosynthesis_zh","risks":["忽略变量和对照","让学生自行进行危险加热或溶剂操作"]}
+{"task_id":"science_photosynthesis_en","risks":["Ignoring variables and controls","Letting students perform hazardous heating or solvent steps"]}
+{"task_id":"it_data_privacy_zh","risks":["要求学生公开真实个人信息","只给口号而不把措施匹配到风险"]}
+{"task_id":"it_data_privacy_en","risks":["Requesting real personal information","Giving slogans without matching controls to risks"]}

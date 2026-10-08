@@ -1,0 +1,17 @@
+{
+  "f4Url": "http://127.0.0.1:8000",
+  "f3Url": "http://127.0.0.1:8003",
+  "f2Url": "http://127.0.0.1:8080",
+  "writebackToF2": true,
+  "lessonId": "REAL_F2_LESSON_ID",
+  "versionId": "REAL_F2_VERSION_ID",
+  "f4SessionId": "F4_SESSION_UUID",
+  "rounds": 4,
+  "messages": [
+    "学生回答：我认为这些数字代表不同的信息。",
+    "学生提问：怎样判断每一位数字的含义？",
+    "学生回答：可以先观察相同位置上的数字。",
+    "学生总结：数字编码能按规则表示对象的信息。"
+  ],
+  "outputDir": "outputs/f3_demo"
+}

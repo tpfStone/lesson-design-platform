@@ -1,0 +1,23 @@
+{
+  "result": {
+    "status": "completed",
+    "stop_reason": "no_actionable_feedback",
+    "best_version_id": "v0",
+    "version_count": 1,
+    "validation_batch_count": 1
+  },
+  "event_types": [
+    "run_started",
+    "design_blueprint_completed",
+    "writer_completed",
+    "judge_completed",
+    "route_decided",
+    "critic_completed",
+    "critic_completed",
+    "critic_completed",
+    "critiques_aggregated",
+    "validation_completed",
+    "route_decided",
+    "run_completed"
+  ]
+}

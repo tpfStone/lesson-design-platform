@@ -1,0 +1,21 @@
+﻿# 教案智能批注系统 — 核心依赖
+# 安装：python -m pip install -r requirements.txt
+
+streamlit>=1.30
+fastapi>=0.110
+uvicorn>=0.29
+openai>=1.0
+PyMuPDF>=1.23
+python-docx>=1.2.0
+PyYAML>=6.0
+openpyxl>=3.1
+pandas>=2.0
+pillow>=9.0
+numpy>=1.24
+
+# --- .doc（旧版 Word）转 .docx 需要（Windows）---
+pywin32>=306
+
+# --- 可选：扫描版 PDF 的 OCR 支持 ---
+# 体积较大（含 torch，约 2GB），仅在需要评阅扫描版（图片型）教案时安装
+# easyocr>=1.7

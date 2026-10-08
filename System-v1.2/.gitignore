@@ -1,0 +1,33 @@
+# Private configuration and generated local data.
+.env
+.env.*
+!.env.example
+data/.api_key
+data/plans/*
+!data/plans/.gitkeep
+output/
+platform_runs/
+platform_batches/
+platform_comparisons/
+F1-real-result.json
+*.db
+*.db-*
+*.sqlite*
+*.log
+
+# Rebuildable Python environment and caches.
+.venv*/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+
+# Local backups and temporary files.
+*.bak
+*.tmp
+~$*.docx

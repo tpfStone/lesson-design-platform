@@ -1,0 +1,14 @@
+.idea/
+.vscode/
+target/
+.mvn/repository/
+.mvn/wrapper/dists/
+frontend/node_modules/
+frontend/dist/
+frontend/test-results/
+frontend/playwright-report/
+frontend/*.tsbuildinfo
+var/
+.env
+*.log
+src/main/resources/application-local.yml

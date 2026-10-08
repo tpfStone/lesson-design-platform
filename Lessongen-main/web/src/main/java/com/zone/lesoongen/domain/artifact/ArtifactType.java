@@ -1,0 +1,16 @@
+package com.zone.lesoongen.domain.artifact;
+
+public enum ArtifactType {
+    BEST_DOCX,
+    REVISED_CANDIDATE_DOCX,
+    BEST_MARKDOWN,
+    BEST_JSON,
+    RECOVERY_JSON,
+    RECOVERY_MARKDOWN,
+    TRACE,
+    PROCESS_REPORT,
+    OPTIMIZATION_REPORT_JSON,
+    OPTIMIZATION_REPORT_MARKDOWN,
+    ORIGINAL_DOCX,
+    NORMALIZED_INPUT_JSON
+}

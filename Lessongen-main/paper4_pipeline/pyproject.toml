@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lessongen-paper4"
+version = "0.1.0"
+description = "Traceable multi-agent lesson-plan generation and revision pipeline"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "pydantic>=2.10,<3",
+  "langgraph>=1.0,<2",
+  "langchain-openai>=1.0,<2",
+  "python-dotenv>=1.0,<2",
+]
+
+[project.optional-dependencies]
+docx = ["python-docx>=1.2,<2"]
+web = [
+  "fastapi>=0.116,<1",
+  "uvicorn[standard]>=0.35,<1",
+  "python-multipart>=0.0.20,<1",
+  "python-docx>=1.2,<2",
+]
+dev = [
+  "pytest>=8.3,<9",
+  "httpx>=0.28,<1",
+]
+
+[project.scripts]
+paper4-pipeline = "paper4_pipeline.cli:main"
+paper4-engine = "paper4_pipeline.web_api.__main__:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

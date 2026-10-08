@@ -1,0 +1,10 @@
+{"task_id":"math_pythagorean_zh","anchors":["仅适用于直角三角形","a²+b²=c²且c为斜边","3-4-5满足平方关系"]}
+{"task_id":"math_pythagorean_en","anchors":["Applies to right triangles","a²+b²=c² with c as hypotenuse","3-4-5 satisfies the square relationship"]}
+{"task_id":"english_simple_past_zh","anchors":["表达过去完成的动作或状态","be使用was或were","did后主要动词使用原形"]}
+{"task_id":"english_simple_past_en","anchors":["Expresses completed past actions or states","Be changes to was or were","The main verb stays in base form after did"]}
+{"task_id":"chemistry_changes_zh","anchors":["核心依据是是否生成新物质","状态改变可能是物理变化","现象线索不能脱离情境直接下结论"]}
+{"task_id":"chemistry_changes_en","anchors":["New-substance formation is the central basis","A state change can be physical","A clue alone is not a context-free conclusion"]}
+{"task_id":"science_photosynthesis_zh","anchors":["光合作用需要光能","输入包括二氧化碳和水","实验结论受变量控制和证据范围限制"]}
+{"task_id":"science_photosynthesis_en","anchors":["Photosynthesis uses light energy","Inputs include carbon dioxide and water","Conclusions are bounded by variable control and evidence"]}
+{"task_id":"it_data_privacy_zh","anchors":["组合数据也可能识别个人","最小化收集是一种保护措施","课堂案例不使用真实凭据"]}
+{"task_id":"it_data_privacy_en","anchors":["Combined data can identify a person","Data minimization is a protection","Classroom cases must not use real credentials"]}

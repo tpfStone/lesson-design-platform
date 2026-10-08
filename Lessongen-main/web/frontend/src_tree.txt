@@ -1,0 +1,44 @@
+卷 Windows-SSD 的文件夹 PATH 列表
+卷序列号为 0000013C 0666:B8A3
+C:\USERS\宸洱\DESKTOP\LLM教案系统\LESSONGEN-MAIN\WEB\FRONTEND\SRC
+│  App.vue
+│  env.d.ts
+│  main.ts
+│  router.ts
+│  
+├─api
+│      client.ts
+│      
+├─components
+│      AppHeader.vue
+│      ChipInput.vue
+│      EvidenceMeter.vue
+│      FormWayfinder.vue
+│      LessonFields.vue
+│      LessonPreview.vue
+│      OptimizationPanel.vue
+│      RadarChartCanvas.vue
+│      ScorePanel.vue
+│      StageTimeline.vue
+│      StatusPill.vue
+│      
+├─stores
+│      connection.ts
+│      draft.ts
+│      jobs.ts
+│      
+├─styles
+│      main.css
+│      
+├─types
+│      api.ts
+│      
+├─utils
+│      lessonPresentation.ts
+│      
+└─views
+        DashboardView.vue
+        GenerateView.vue
+        JobView.vue
+        OptimizeView.vue
+        

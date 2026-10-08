@@ -1,0 +1,65 @@
+F1-v1.2-platform-integration 修改文件清单
+日期：2026-10-04
+
+一、基线来源
+1. System-v1.2.zip
+2. 已验收 platform_api.py（保持原接口路径、请求字段、任务状态与下载接口）
+
+二、本轮实际修改
+
+[修改] platform_api.py
+- 保留固定 criteria_type=student
+- 保留固定 variant=v2_guided
+- 保留 suggest 默认 true
+- 保留全部现有 /internal/v1 接口
+- 保留 lessonId/versionId 映射
+- 保留 rubric.groups 兼容旧统一 Web
+- 新增 rubric.dimensions（12 个二级维度）
+- 新增每个二级维度 grade=A/B/C
+- 新增 rubric.gradingScale
+- 批注评价统一归一为 A/B/C
+- 总分按 12 个二级维度重新求和
+- 新增 files 产物数组
+- 保留旧 artifacts 下载映射
+
+[修改] service.py
+- apply_grades_and_tree() 在产物生成前重新计算 12 维总分
+- 同步重建 评分汇总.各维度得分
+- 保证 Word/JSON 导出与 API 总分口径一致
+
+[修改] requirements.txt
+- 新增 fastapi>=0.110
+- 新增 uvicorn>=0.29
+- python-docx 最低版本改为 >=1.2.0（Word 原生批注 add_comment 所需）
+- EasyOCR 继续保留为可选依赖，不默认安装
+
+[新增] F1_API_v1.2_接口说明.md
+[新增] F1_v1.2_验收记录.md
+[新增] 修改文件清单.txt
+
+三、从 System-v1.2 保留并纳入最终包（未额外改写）
+- config.yaml
+- prompts.py
+- standards.py
+- parsers.py
+- annotator.py
+- docx_annotator.py
+- pdf_annotator.py
+- providers.py
+- pipeline.py
+- suggester.py
+- anchors.py
+- comparison.py
+- web/app.py
+- tools/install_ocr.bat
+- docs/OCR安装与使用说明.md
+- data/criteria/student_评价指标V3.docx
+- 以及 System-v1.2 其他原始源码、知识库、示例与说明文件
+
+四、本轮明确未修改
+- F2 Lessongen-main
+- F3 SimClass-main
+- F4 NoviceTeacher-AI-main
+- 统一 Web 前端页面
+
+说明：统一 Web 的十二维雷达图/六个一级维度摘要卡/A-B-C 彩色标签属于下一阶段总项目 UI 对接；本轮 F1 API 已提供所需结构化数据。

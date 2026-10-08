@@ -1,0 +1,10 @@
+{"task_id":"math_pythagorean_zh","stages":["诊断直角三角形前置知识","面积拼图探究","明确适用条件","3-4-5计算练习","出口评价"]}
+{"task_id":"math_pythagorean_en","stages":["Diagnose right-triangle prerequisites","Area-rearrangement inquiry","State the applicability condition","3-4-5 calculation practice","Exit assessment"]}
+{"task_id":"english_simple_past_zh","stages":["过去时间语境导入","形式与意义归纳","同伴采访","复述反馈","迁移作业"]}
+{"task_id":"english_simple_past_en","stages":["Past-time context","Form-and-meaning noticing","Peer interview","Report and feedback","Transfer homework"]}
+{"task_id":"chemistry_changes_zh","stages":["生活现象分类预测","观察证据记录","新物质判断","反例辨析","安全与出口评价"]}
+{"task_id":"chemistry_changes_en","stages":["Predict classifications","Record observations","Reason about new substances","Analyze counterexamples","Safety and exit assessment"]}
+{"task_id":"science_photosynthesis_zh","stages":["提出证据问题","识别变量与对照","分析观察结果","形成有限结论","安全提醒与评价"]}
+{"task_id":"science_photosynthesis_en","stages":["Frame the evidence question","Identify variables and control","Analyze observations","Draw a bounded conclusion","Safety and assessment"]}
+{"task_id":"it_data_privacy_zh","stages":["情境风险识别","数据生命周期分析","措施匹配","便利与隐私权衡","个人行动清单"]}
+{"task_id":"it_data_privacy_en","stages":["Identify scenario risks","Analyze the data lifecycle","Match protections","Weigh convenience and privacy","Personal action checklist"]}

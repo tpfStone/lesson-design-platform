@@ -1,0 +1,1351 @@
+{
+  "contract_version": "p1-engine-v1",
+  "models": {
+    "CreateRunRequest": {
+      "$defs": {
+        "EngineLessonInput": {
+          "additionalProperties": false,
+          "properties": {
+            "additional_requirements": {
+              "default": "",
+              "maxLength": 8000,
+              "title": "Additional Requirements",
+              "type": "string"
+            },
+            "available_resources": {
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 50,
+              "title": "Available Resources",
+              "type": "array"
+            },
+            "class_size": {
+              "anyOf": [
+                {
+                  "maximum": 200,
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Class Size"
+            },
+            "course_information": {
+              "default": "",
+              "maxLength": 4000,
+              "title": "Course Information",
+              "type": "string"
+            },
+            "curriculum_standards": {
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 50,
+              "title": "Curriculum Standards",
+              "type": "array"
+            },
+            "detail_level": {
+              "default": "showcase",
+              "enum": [
+                "standard",
+                "showcase"
+              ],
+              "title": "Detail Level",
+              "type": "string"
+            },
+            "duration_minutes": {
+              "default": 45,
+              "maximum": 240,
+              "minimum": 5,
+              "title": "Duration Minutes",
+              "type": "integer"
+            },
+            "grade": {
+              "maxLength": 64,
+              "minLength": 1,
+              "title": "Grade",
+              "type": "string"
+            },
+            "learning_objectives": {
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 20,
+              "title": "Learning Objectives",
+              "type": "array"
+            },
+            "lesson_style": {
+              "default": "choose_the_best_fit_for_this_topic",
+              "title": "Lesson Style",
+              "type": "string"
+            },
+            "mode": {
+              "$ref": "#/$defs/EngineMode"
+            },
+            "must_preserve_content": {
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 20,
+              "title": "Must Preserve Content",
+              "type": "array"
+            },
+            "optimization_focus": {
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 20,
+              "title": "Optimization Focus",
+              "type": "array"
+            },
+            "student_profile": {
+              "default": "",
+              "maxLength": 8000,
+              "title": "Student Profile",
+              "type": "string"
+            },
+            "subject": {
+              "maxLength": 64,
+              "minLength": 1,
+              "title": "Subject",
+              "type": "string"
+            },
+            "textbook_content": {
+              "default": "",
+              "maxLength": 30000,
+              "title": "Textbook Content",
+              "type": "string"
+            },
+            "textbook_version": {
+              "default": "",
+              "maxLength": 255,
+              "title": "Textbook Version",
+              "type": "string"
+            },
+            "topic": {
+              "maxLength": 255,
+              "minLength": 1,
+              "title": "Topic",
+              "type": "string"
+            }
+          },
+          "required": [
+            "mode",
+            "subject",
+            "grade",
+            "topic"
+          ],
+          "title": "EngineLessonInput",
+          "type": "object"
+        },
+        "EngineMode": {
+          "enum": [
+            "generate",
+            "optimize"
+          ],
+          "title": "EngineMode",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "properties": {
+        "contract_version": {
+          "const": "1",
+          "default": "1",
+          "title": "Contract Version",
+          "type": "string"
+        },
+        "external_job_id": {
+          "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+          "title": "External Job Id",
+          "type": "string"
+        },
+        "request_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Request Sha256",
+          "type": "string"
+        },
+        "task": {
+          "$ref": "#/$defs/EngineLessonInput"
+        }
+      },
+      "required": [
+        "external_job_id",
+        "request_sha256",
+        "task"
+      ],
+      "title": "CreateRunRequest",
+      "type": "object"
+    },
+    "EngineArtifact": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_id": {
+          "title": "Artifact Id",
+          "type": "string"
+        },
+        "display_name": {
+          "title": "Display Name",
+          "type": "string"
+        },
+        "error": {
+          "default": "",
+          "title": "Error",
+          "type": "string"
+        },
+        "format": {
+          "title": "Format",
+          "type": "string"
+        },
+        "media_type": {
+          "title": "Media Type",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "minimum": 0,
+          "title": "Size Bytes",
+          "type": "integer"
+        },
+        "status": {
+          "default": "ok",
+          "enum": [
+            "ok",
+            "error"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "artifact_id",
+        "format",
+        "display_name",
+        "media_type",
+        "size_bytes",
+        "sha256"
+      ],
+      "title": "EngineArtifact",
+      "type": "object"
+    },
+    "EngineEventPage": {
+      "$defs": {
+        "PublicEngineEvent": {
+          "additionalProperties": false,
+          "properties": {
+            "event_type": {
+              "title": "Event Type",
+              "type": "string"
+            },
+            "message": {
+              "title": "Message",
+              "type": "string"
+            },
+            "occurred_at": {
+              "format": "date-time",
+              "title": "Occurred At",
+              "type": "string"
+            },
+            "progress_percent": {
+              "maximum": 100,
+              "minimum": 0,
+              "title": "Progress Percent",
+              "type": "integer"
+            },
+            "round_index": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Round Index",
+              "type": "integer"
+            },
+            "sequence": {
+              "minimum": 1,
+              "title": "Sequence",
+              "type": "integer"
+            },
+            "stage": {
+              "title": "Stage",
+              "type": "string"
+            },
+            "version_id": {
+              "default": "",
+              "title": "Version Id",
+              "type": "string"
+            }
+          },
+          "required": [
+            "sequence",
+            "event_type",
+            "stage",
+            "progress_percent",
+            "message",
+            "occurred_at"
+          ],
+          "title": "PublicEngineEvent",
+          "type": "object"
+        }
+      },
+      "additionalProperties": false,
+      "properties": {
+        "has_more": {
+          "default": false,
+          "title": "Has More",
+          "type": "boolean"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/PublicEngineEvent"
+          },
+          "title": "Items",
+          "type": "array"
+        },
+        "last_sequence": {
+          "minimum": 0,
+          "title": "Last Sequence",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "items",
+        "last_sequence"
+      ],
+      "title": "EngineEventPage",
+      "type": "object"
+    },
+    "EngineResult": {
+      "$defs": {
+        "EngineArtifact": {
+          "additionalProperties": false,
+          "properties": {
+            "artifact_id": {
+              "title": "Artifact Id",
+              "type": "string"
+            },
+            "display_name": {
+              "title": "Display Name",
+              "type": "string"
+            },
+            "error": {
+              "default": "",
+              "title": "Error",
+              "type": "string"
+            },
+            "format": {
+              "title": "Format",
+              "type": "string"
+            },
+            "media_type": {
+              "title": "Media Type",
+              "type": "string"
+            },
+            "sha256": {
+              "pattern": "^[a-f0-9]{64}$",
+              "title": "Sha256",
+              "type": "string"
+            },
+            "size_bytes": {
+              "minimum": 0,
+              "title": "Size Bytes",
+              "type": "integer"
+            },
+            "status": {
+              "default": "ok",
+              "enum": [
+                "ok",
+                "error"
+              ],
+              "title": "Status",
+              "type": "string"
+            }
+          },
+          "required": [
+            "artifact_id",
+            "format",
+            "display_name",
+            "media_type",
+            "size_bytes",
+            "sha256"
+          ],
+          "title": "EngineArtifact",
+          "type": "object"
+        },
+        "ImplementedChangeSummary": {
+          "additionalProperties": false,
+          "properties": {
+            "critique_id": {
+              "title": "Critique Id",
+              "type": "string"
+            },
+            "summary": {
+              "title": "Summary",
+              "type": "string"
+            },
+            "target_path": {
+              "default": "",
+              "title": "Target Path",
+              "type": "string"
+            }
+          },
+          "required": [
+            "critique_id",
+            "summary"
+          ],
+          "title": "ImplementedChangeSummary",
+          "type": "object"
+        },
+        "JsonValue": {},
+        "LearningObjective": {
+          "additionalProperties": false,
+          "properties": {
+            "description": {
+              "minLength": 1,
+              "title": "Description",
+              "type": "string"
+            },
+            "evidence_of_achievement": {
+              "default": "",
+              "title": "Evidence Of Achievement",
+              "type": "string"
+            },
+            "objective_id": {
+              "minLength": 1,
+              "title": "Objective Id",
+              "type": "string"
+            },
+            "standard_refs": {
+              "items": {
+                "type": "string"
+              },
+              "title": "Standard Refs",
+              "type": "array"
+            }
+          },
+          "required": [
+            "objective_id",
+            "description"
+          ],
+          "title": "LearningObjective",
+          "type": "object"
+        },
+        "LessonMetadata": {
+          "additionalProperties": false,
+          "properties": {
+            "duration_minutes": {
+              "maximum": 240,
+              "minimum": 5,
+              "title": "Duration Minutes",
+              "type": "integer"
+            },
+            "grade": {
+              "minLength": 1,
+              "title": "Grade",
+              "type": "string"
+            },
+            "subject": {
+              "minLength": 1,
+              "title": "Subject",
+              "type": "string"
+            },
+            "textbook_version": {
+              "default": "",
+              "title": "Textbook Version",
+              "type": "string"
+            },
+            "topic": {
+              "minLength": 1,
+              "title": "Topic",
+              "type": "string"
+            }
+          },
+          "required": [
+            "subject",
+            "grade",
+            "topic",
+            "duration_minutes"
+          ],
+          "title": "LessonMetadata",
+          "type": "object"
+        },
+        "LessonPlanDocument": {
+          "additionalProperties": false,
+          "description": "Canonical lesson-plan content independent of Markdown/Word layout.",
+          "properties": {
+            "assessment_plan": {
+              "default": "",
+              "title": "Assessment Plan",
+              "type": "string"
+            },
+            "board_design": {
+              "default": "",
+              "title": "Board Design",
+              "type": "string"
+            },
+            "content_analysis": {
+              "default": "",
+              "title": "Content Analysis",
+              "type": "string"
+            },
+            "curriculum_standards": {
+              "items": {
+                "type": "string"
+              },
+              "title": "Curriculum Standards",
+              "type": "array"
+            },
+            "design_thesis": {
+              "default": "",
+              "title": "Design Thesis",
+              "type": "string"
+            },
+            "differentiation": {
+              "default": "",
+              "title": "Differentiation",
+              "type": "string"
+            },
+            "difficult_points": {
+              "items": {
+                "type": "string"
+              },
+              "title": "Difficult Points",
+              "type": "array"
+            },
+            "driving_question": {
+              "default": "",
+              "title": "Driving Question",
+              "type": "string"
+            },
+            "homework": {
+              "default": "",
+              "title": "Homework",
+              "type": "string"
+            },
+            "key_points": {
+              "items": {
+                "type": "string"
+              },
+              "title": "Key Points",
+              "type": "array"
+            },
+            "learning_objectives": {
+              "items": {
+                "$ref": "#/$defs/LearningObjective"
+              },
+              "title": "Learning Objectives",
+              "type": "array"
+            },
+            "learning_trajectory": {
+              "items": {
+                "type": "string"
+              },
+              "title": "Learning Trajectory",
+              "type": "array"
+            },
+            "metadata": {
+              "$ref": "#/$defs/LessonMetadata"
+            },
+            "plan_id": {
+              "minLength": 1,
+              "title": "Plan Id",
+              "type": "string"
+            },
+            "procedure_steps": {
+              "items": {
+                "$ref": "#/$defs/ProcedureStep"
+              },
+              "title": "Procedure Steps",
+              "type": "array"
+            },
+            "references": {
+              "items": {
+                "type": "string"
+              },
+              "title": "References",
+              "type": "array"
+            },
+            "reflection": {
+              "default": "",
+              "title": "Reflection",
+              "type": "string"
+            },
+            "resources": {
+              "items": {
+                "$ref": "#/$defs/TeachingResource"
+              },
+              "title": "Resources",
+              "type": "array"
+            },
+            "schema_version": {
+              "const": "paper4-lesson-plan-v0.1",
+              "default": "paper4-lesson-plan-v0.1",
+              "title": "Schema Version",
+              "type": "string"
+            },
+            "student_analysis": {
+              "default": "",
+              "title": "Student Analysis",
+              "type": "string"
+            },
+            "task_id": {
+              "minLength": 1,
+              "title": "Task Id",
+              "type": "string"
+            },
+            "teaching_artifacts": {
+              "items": {
+                "$ref": "#/$defs/TeachingArtifact"
+              },
+              "title": "Teaching Artifacts",
+              "type": "array"
+            },
+            "teaching_strategy": {
+              "default": "",
+              "title": "Teaching Strategy",
+              "type": "string"
+            },
+            "template_extensions": {
+              "additionalProperties": {
+                "$ref": "#/$defs/JsonValue"
+              },
+              "title": "Template Extensions",
+              "type": "object"
+            },
+            "template_id": {
+              "default": "general_v0_1",
+              "title": "Template Id",
+              "type": "string"
+            }
+          },
+          "required": [
+            "plan_id",
+            "task_id",
+            "metadata"
+          ],
+          "title": "LessonPlanDocument",
+          "type": "object"
+        },
+        "LessonQuestion": {
+          "additionalProperties": false,
+          "properties": {
+            "evidence_to_notice": {
+              "default": "",
+              "title": "Evidence To Notice",
+              "type": "string"
+            },
+            "expected_responses": {
+              "items": {
+                "type": "string"
+              },
+              "title": "Expected Responses",
+              "type": "array"
+            },
+            "possible_misconceptions": {
+              "items": {
+                "type": "string"
+              },
+              "title": "Possible Misconceptions",
+              "type": "array"
+            },
+            "question": {
+              "minLength": 1,
+              "title": "Question",
+              "type": "string"
+            },
+            "teacher_follow_ups": {
+              "items": {
+                "type": "string"
+              },
+              "title": "Teacher Follow Ups",
+              "type": "array"
+            }
+          },
+          "required": [
+            "question"
+          ],
+          "title": "LessonQuestion",
+          "type": "object"
+        },
+        "ProcedureStep": {
+          "additionalProperties": false,
+          "properties": {
+            "artifact_ids": {
+              "items": {
+                "type": "string"
+              },
+              "title": "Artifact Ids",
+              "type": "array"
+            },
+            "assessment": {
+              "default": "",
+              "title": "Assessment",
+              "type": "string"
+            },
+            "design_rationale": {
+              "default": "",
+              "title": "Design Rationale",
+              "type": "string"
+            },
+            "duration_minutes": {
+              "maximum": 240,
+              "minimum": 1,
+              "title": "Duration Minutes",
+              "type": "integer"
+            },
+            "extensions": {
+              "items": {
+                "type": "string"
+              },
+              "title": "Extensions",
+              "type": "array"
+            },
+            "objective_ids": {
+              "items": {
+                "type": "string"
+              },
+              "title": "Objective Ids",
+              "type": "array"
+            },
+            "questions": {
+              "items": {
+                "$ref": "#/$defs/LessonQuestion"
+              },
+              "title": "Questions",
+              "type": "array"
+            },
+            "resource_ids": {
+              "items": {
+                "type": "string"
+              },
+              "title": "Resource Ids",
+              "type": "array"
+            },
+            "response_branches": {
+              "items": {
+                "$ref": "#/$defs/TeacherResponseBranch"
+              },
+              "title": "Response Branches",
+              "type": "array"
+            },
+            "scaffolds": {
+              "items": {
+                "type": "string"
+              },
+              "title": "Scaffolds",
+              "type": "array"
+            },
+            "stage": {
+              "minLength": 1,
+              "title": "Stage",
+              "type": "string"
+            },
+            "step_id": {
+              "minLength": 1,
+              "title": "Step Id",
+              "type": "string"
+            },
+            "student_actions": {
+              "items": {
+                "type": "string"
+              },
+              "title": "Student Actions",
+              "type": "array"
+            },
+            "student_product": {
+              "default": "",
+              "title": "Student Product",
+              "type": "string"
+            },
+            "success_criteria": {
+              "items": {
+                "type": "string"
+              },
+              "title": "Success Criteria",
+              "type": "array"
+            },
+            "teacher_actions": {
+              "items": {
+                "type": "string"
+              },
+              "title": "Teacher Actions",
+              "type": "array"
+            },
+            "transition": {
+              "default": "",
+              "title": "Transition",
+              "type": "string"
+            }
+          },
+          "required": [
+            "step_id",
+            "stage",
+            "duration_minutes"
+          ],
+          "title": "ProcedureStep",
+          "type": "object"
+        },
+        "ReviewSummary": {
+          "additionalProperties": false,
+          "properties": {
+            "content_changed": {
+              "default": false,
+              "title": "Content Changed",
+              "type": "boolean"
+            },
+            "independent_review_complete": {
+              "default": false,
+              "title": "Independent Review Complete",
+              "type": "boolean"
+            },
+            "policy": {
+              "default": "legacy_unknown",
+              "title": "Policy",
+              "type": "string"
+            },
+            "reviewed_roles": {
+              "items": {
+                "type": "string"
+              },
+              "title": "Reviewed Roles",
+              "type": "array"
+            },
+            "validator_completed": {
+              "default": false,
+              "title": "Validator Completed",
+              "type": "boolean"
+            }
+          },
+          "title": "ReviewSummary",
+          "type": "object"
+        },
+        "RubricScores": {
+          "additionalProperties": false,
+          "properties": {
+            "assessment_design": {
+              "maximum": 10,
+              "minimum": 0,
+              "title": "Assessment Design",
+              "type": "number"
+            },
+            "classroom_feasibility": {
+              "maximum": 10,
+              "minimum": 0,
+              "title": "Classroom Feasibility",
+              "type": "number"
+            },
+            "curriculum_alignment": {
+              "maximum": 10,
+              "minimum": 0,
+              "title": "Curriculum Alignment",
+              "type": "number"
+            },
+            "differentiated_instruction": {
+              "maximum": 10,
+              "minimum": 0,
+              "title": "Differentiated Instruction",
+              "type": "number"
+            },
+            "knowledge_accuracy": {
+              "maximum": 10,
+              "minimum": 0,
+              "title": "Knowledge Accuracy",
+              "type": "number"
+            },
+            "language_and_format": {
+              "maximum": 10,
+              "minimum": 0,
+              "title": "Language And Format",
+              "type": "number"
+            },
+            "student_engagement": {
+              "maximum": 10,
+              "minimum": 0,
+              "title": "Student Engagement",
+              "type": "number"
+            },
+            "teaching_logic": {
+              "maximum": 10,
+              "minimum": 0,
+              "title": "Teaching Logic",
+              "type": "number"
+            }
+          },
+          "required": [
+            "curriculum_alignment",
+            "knowledge_accuracy",
+            "teaching_logic",
+            "classroom_feasibility",
+            "differentiated_instruction",
+            "student_engagement",
+            "assessment_design",
+            "language_and_format"
+          ],
+          "title": "RubricScores",
+          "type": "object"
+        },
+        "TeacherResponseBranch": {
+          "additionalProperties": false,
+          "properties": {
+            "purpose": {
+              "default": "",
+              "title": "Purpose",
+              "type": "string"
+            },
+            "teacher_move": {
+              "minLength": 1,
+              "title": "Teacher Move",
+              "type": "string"
+            },
+            "trigger": {
+              "minLength": 1,
+              "title": "Trigger",
+              "type": "string"
+            }
+          },
+          "required": [
+            "trigger",
+            "teacher_move"
+          ],
+          "title": "TeacherResponseBranch",
+          "type": "object"
+        },
+        "TeachingArtifact": {
+          "additionalProperties": false,
+          "properties": {
+            "answer_or_success_criteria": {
+              "default": "",
+              "title": "Answer Or Success Criteria",
+              "type": "string"
+            },
+            "artifact_id": {
+              "minLength": 1,
+              "title": "Artifact Id",
+              "type": "string"
+            },
+            "artifact_type": {
+              "minLength": 1,
+              "title": "Artifact Type",
+              "type": "string"
+            },
+            "content": {
+              "minLength": 1,
+              "title": "Content",
+              "type": "string"
+            },
+            "purpose": {
+              "default": "",
+              "title": "Purpose",
+              "type": "string"
+            },
+            "title": {
+              "minLength": 1,
+              "title": "Title",
+              "type": "string"
+            }
+          },
+          "required": [
+            "artifact_id",
+            "artifact_type",
+            "title",
+            "content"
+          ],
+          "title": "TeachingArtifact",
+          "type": "object"
+        },
+        "TeachingResource": {
+          "additionalProperties": false,
+          "properties": {
+            "description": {
+              "default": "",
+              "title": "Description",
+              "type": "string"
+            },
+            "name": {
+              "minLength": 1,
+              "title": "Name",
+              "type": "string"
+            },
+            "ready_to_use_content": {
+              "default": "",
+              "title": "Ready To Use Content",
+              "type": "string"
+            },
+            "resource_id": {
+              "minLength": 1,
+              "title": "Resource Id",
+              "type": "string"
+            }
+          },
+          "required": [
+            "resource_id",
+            "name"
+          ],
+          "title": "TeachingResource",
+          "type": "object"
+        }
+      },
+      "additionalProperties": false,
+      "properties": {
+        "artifacts": {
+          "items": {
+            "$ref": "#/$defs/EngineArtifact"
+          },
+          "title": "Artifacts",
+          "type": "array"
+        },
+        "best_lesson_plan": {
+          "$ref": "#/$defs/LessonPlanDocument"
+        },
+        "best_version_id": {
+          "title": "Best Version Id",
+          "type": "string"
+        },
+        "engine_run_id": {
+          "title": "Engine Run Id",
+          "type": "string"
+        },
+        "external_job_id": {
+          "title": "External Job Id",
+          "type": "string"
+        },
+        "implemented_changes": {
+          "items": {
+            "$ref": "#/$defs/ImplementedChangeSummary"
+          },
+          "title": "Implemented Changes",
+          "type": "array"
+        },
+        "last_version_id": {
+          "title": "Last Version Id",
+          "type": "string"
+        },
+        "optimization": {
+          "anyOf": [
+            {
+              "additionalProperties": {
+                "$ref": "#/$defs/JsonValue"
+              },
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Optimization"
+        },
+        "overall_score": {
+          "anyOf": [
+            {
+              "maximum": 10,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Overall Score"
+        },
+        "parse_warnings": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Parse Warnings",
+          "type": "array"
+        },
+        "pipeline_status": {
+          "title": "Pipeline Status",
+          "type": "string"
+        },
+        "review": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReviewSummary"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "rubric_scores": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RubricScores"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "stop_reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Stop Reason"
+        },
+        "unresolved_issues": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Unresolved Issues",
+          "type": "array"
+        }
+      },
+      "required": [
+        "engine_run_id",
+        "external_job_id",
+        "pipeline_status",
+        "best_version_id",
+        "last_version_id",
+        "best_lesson_plan"
+      ],
+      "title": "EngineResult",
+      "type": "object"
+    },
+    "RunAccepted": {
+      "$defs": {
+        "EngineRunStatus": {
+          "enum": [
+            "queued",
+            "preprocessing",
+            "running",
+            "exporting",
+            "completed",
+            "needs_human",
+            "failed"
+          ],
+          "title": "EngineRunStatus",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "properties": {
+        "created_at": {
+          "format": "date-time",
+          "title": "Created At",
+          "type": "string"
+        },
+        "engine_run_id": {
+          "title": "Engine Run Id",
+          "type": "string"
+        },
+        "external_job_id": {
+          "title": "External Job Id",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/EngineRunStatus"
+        }
+      },
+      "required": [
+        "engine_run_id",
+        "external_job_id",
+        "status",
+        "created_at"
+      ],
+      "title": "RunAccepted",
+      "type": "object"
+    },
+    "RunSnapshot": {
+      "$defs": {
+        "EngineError": {
+          "additionalProperties": false,
+          "properties": {
+            "code": {
+              "title": "Code",
+              "type": "string"
+            },
+            "message": {
+              "title": "Message",
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message"
+          ],
+          "title": "EngineError",
+          "type": "object"
+        },
+        "EngineRunStatus": {
+          "enum": [
+            "queued",
+            "preprocessing",
+            "running",
+            "exporting",
+            "completed",
+            "needs_human",
+            "failed"
+          ],
+          "title": "EngineRunStatus",
+          "type": "string"
+        },
+        "EngineUsage": {
+          "additionalProperties": false,
+          "properties": {
+            "estimated_cost": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Estimated Cost",
+              "type": "number"
+            },
+            "input_tokens": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Input Tokens",
+              "type": "integer"
+            },
+            "model_call_count": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Model Call Count",
+              "type": "integer"
+            },
+            "output_tokens": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Output Tokens",
+              "type": "integer"
+            }
+          },
+          "title": "EngineUsage",
+          "type": "object"
+        }
+      },
+      "additionalProperties": false,
+      "properties": {
+        "best_version_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Best Version Id"
+        },
+        "engine_run_id": {
+          "title": "Engine Run Id",
+          "type": "string"
+        },
+        "error": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EngineError"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "external_job_id": {
+          "title": "External Job Id",
+          "type": "string"
+        },
+        "last_event_sequence": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Last Event Sequence",
+          "type": "integer"
+        },
+        "last_version_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Last Version Id"
+        },
+        "pipeline_status": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pipeline Status"
+        },
+        "progress_percent": {
+          "default": 0,
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Progress Percent",
+          "type": "integer"
+        },
+        "round_index": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Round Index",
+          "type": "integer"
+        },
+        "stage": {
+          "title": "Stage",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/EngineRunStatus"
+        },
+        "stop_reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Stop Reason"
+        },
+        "updated_at": {
+          "format": "date-time",
+          "title": "Updated At",
+          "type": "string"
+        },
+        "usage": {
+          "$ref": "#/$defs/EngineUsage"
+        },
+        "version_id": {
+          "default": "",
+          "title": "Version Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "engine_run_id",
+        "external_job_id",
+        "status",
+        "stage",
+        "updated_at"
+      ],
+      "title": "RunSnapshot",
+      "type": "object"
+    }
+  }
+}
